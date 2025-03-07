@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthQuest.MainPage"
+             Title="HealthQuest">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <!-- Welcome Message -->
+            <Label Text="Welcome to HealthQuest!"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="MediumPurple" />
+            <Label Text="A healthy Game!!"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="MediumPurple" />
+
+            <!-- User Stats -->
+            <Frame BorderColor="LightGray"
+                   CornerRadius="10"
+                   Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Your Stats"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                    <Label Text="HP: Loading..."
+                           x:Name="HpLabel" />
+                    <Label Text="Stamina: Loading..."
+                           x:Name="StaminaLabel" />
+                    <Label Text="Strength: Loading..."
+                           x:Name="StrengthLabel" />
+                    <Label Text="Agility: Loading..."
+                           x:Name="AgilityLabel" />
+                    <Label Text="Vigor: Loading..."
+                           x:Name="VigorLabel" />
+                </VerticalStackLayout>
+            </Frame>
+
+
+            <!-- Navigation Buttons -->
+            <Button Text="Train"
+                    Clicked="OnClickedTrainPage"
+                    BackgroundColor="LightBlue"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <Button Text="Sleep"
+                    Clicked="OnClickedSleepPage"
+                    BackgroundColor="LightGreen"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <Button Text="Go on a Walk"
+                    Clicked="OnClickedWalkPage"
+                    BackgroundColor="LightCoral"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <Button Text="Battle"
+                    Clicked="OnClickedBattlePage"
+                    BackgroundColor="LightSalmon"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <!-- Weather Display -->
+            <Frame BorderColor="LightGray"
+                   CornerRadius="10"
+                   Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Weather"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                    <Label Text="Loading weather..."
+                           x:Name="WeatherLabel" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

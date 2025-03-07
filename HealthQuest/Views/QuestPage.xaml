@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthQuest.Views.QuestPage"
+             Title="QuestPage">
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <!-- Welcome Message -->
+            <Label Text="Train to improve your stats!"
+           FontSize="24"
+           FontAttributes="Bold"
+           HorizontalOptions="Center"
+           TextColor="MediumPurple" />
+
+
+            <!-- User Stats -->
+            <Frame BorderColor="LightGray"
+           CornerRadius="10"
+           Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Your Stats"
+                   FontSize="18"
+                   FontAttributes="Bold" />
+                    <Label Text="HP: Loading..."
+                   x:Name="HpLabel" />
+                    <Label Text="Stamina: Loading..."
+                   x:Name="StaminaLabel" />
+                    <Label Text="Strength: Loading..."
+                   x:Name="StrengthLabel" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <ListView ItemsSource="{Binding Quests}" 
+            ItemSelected="OnListViewItemSelected">
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                        <ViewCell >
+                            <Grid Padding="10"
+                            RowDefinitions="auto,*"
+                            ColumnDefinitions="200,*"
+                            ColumnSpacing="20">
+
+                                <Label Grid.Column="1"
+                                Text="{Binding Name}"
+                                FontSize="32"/>
+                                <Label Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding Reps }"
+                                FontSize="15" />
+                                <Label Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding stat, StringFormat='Stat to improve {0}' }"
+                                FontSize="15" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+
+            <!-- Weather Display -->
+            <Frame BorderColor="LightGray"
+           CornerRadius="10"
+           Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Weather"
+                   FontSize="18"
+                   FontAttributes="Bold" />
+                    <Label Text="Loading weather..."
+                   x:Name="WeatherLabel" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthQuest.Views.QuestDetailsPage"
+             Title="QuestDetailsPage">
+    <VerticalStackLayout>
+
+        <!-- Welcome Message -->
+        <Label Text="Train to improve your stats!"
+            FontSize="24"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            TextColor="MediumPurple" />
+
+        <Border Stroke="LightGray"
+            StrokeThickness="2"
+            StrokeShape="RoundRectangle 35"
+            Background="#2B0B98"
+            Padding="15"
+            HorizontalOptions="Center">
+            <Grid>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Quest"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+                    <Label Grid.Column="1"
+                        Text="{Binding Name}"
+                        FontSize="24"/>
+                    <Label Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding Reps }"
+                        FontSize="15" />
+                    <Label Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding Stat , StringFormat='Stat to get improved {0}' }"
+                        FontSize="15" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>
