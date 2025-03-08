@@ -15,7 +15,8 @@ namespace HealthQuest.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=tcp:freesqlnoa.database.windows.net,1433;Initial Catalog=noadb;Persist Security Info=False;User ID=noadb;Password=Hemligt123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"); 
+            //optionsBuilder.UseSqlServer("Server=tcp:freesqlnoa.database.windows.net,1433;Initial Catalog=noadb;Persist Security Info=False;User ID=noadb;Password=Hemligt123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=HealthQuest;Trusted_Connection=True;TrustServerCertificate=True;");   //local  
 
         }
     }

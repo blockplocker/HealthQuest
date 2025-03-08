@@ -1,20 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace HealthQuest.Models
 {
-    class DailyQuest
+    class DailyQuest : INotifyPropertyChanged
     {
-        public int Pushups { get; set; }
-        public int SitUps { get; set; }
-        public int Squats { get; set; }
-        public int Walk { get; set; }
-        public int UserId { get; set; }
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Navigation property
-        public User User { get; set; }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public string Id { get; set; }
+        private int _pushups;
+        public int Pushups
+        {
+            get { return _pushups; }
+            set
+            {
+                _pushups = value;
+                OnPropertyChanged(nameof(Pushups));
+            }
+        }
+
+        private int _sitUps;
+        public int SitUps
+        {
+            get { return _sitUps; }
+            set
+            {
+                _sitUps = value;
+                OnPropertyChanged(nameof(SitUps));
+            }
+        }
+
+        private int _squats;
+        public int Squats
+        {
+            get { return _squats; }
+            set
+            {
+                _squats = value;
+                OnPropertyChanged(nameof(Squats));
+            }
+        }
+
+        private int _walk;
+        public int Walk
+        {
+            get { return _walk; }
+            set
+            {
+                _walk = value;
+                OnPropertyChanged(nameof(Walk));
+            }
+        }
     }
 }

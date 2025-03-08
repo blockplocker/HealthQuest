@@ -13,9 +13,11 @@ namespace HealthQuest.Models
         public int Reps { get; set; }
         public int RepsDone { get; set; }
         public string Stat { get; set; }
-        public int UserId { get; set; }
+
+
+        //public int UserId { get; set; }
 
         // Navigation property
-        public User User { get; set; }
+        //public User User { get; set; }
     }
 }

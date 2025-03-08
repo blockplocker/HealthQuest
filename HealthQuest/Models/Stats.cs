@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace HealthQuest.Models
 {
-    internal class User
+    class Stats
     {
-        public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public string Id { get; set; }
         public int Hp { get; set; }
         public int Stamina { get; set; }
         public int Strenght { get; set; }
         public int Agility { get; set; }
         public int Vigor { get; set; }
-
-        // Navigation properties
-        public DailyQuest DailyQuest { get; set; }
-        public ICollection<Quest> Quests { get; set; }
     }
 }
