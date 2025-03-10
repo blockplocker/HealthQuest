@@ -85,8 +85,10 @@ namespace HealthQuest.ViewModels
             }
         }
 
-        public void CompleteMission(string missionType)
+        public async Task CompleteMissionAsync(string missionType)
         {
+            bool statsChanged = false;
+
             switch (missionType)
             {
                 case "Pushups":
@@ -94,6 +96,7 @@ namespace HealthQuest.ViewModels
                     {
                         Stats.Strenght += DailyQuest.Pushups / 10;
                         DailyQuest.Pushups = 0;
+                        statsChanged = true;
                     }
                     break;
                 case "SitUps":
@@ -101,6 +104,7 @@ namespace HealthQuest.ViewModels
                     {
                         Stats.Agility += DailyQuest.SitUps / 10;
                         DailyQuest.SitUps = 0;
+                        statsChanged = true;
                     }
                     break;
                 case "Squats":
@@ -108,6 +112,7 @@ namespace HealthQuest.ViewModels
                     {
                         Stats.Vigor += DailyQuest.Squats / 10;
                         DailyQuest.Squats = 0;
+                        statsChanged = true;
                     }
                     break;
                 case "Walk":
@@ -115,9 +120,28 @@ namespace HealthQuest.ViewModels
                     {
                         Stats.Stamina += DailyQuest.Walk / 5000;
                         DailyQuest.Walk = 0;
+                        statsChanged = true;
                     }
                     break;
             }
+            if (statsChanged)
+            {
+                await UpdateStatsAsync();
+            }
+        }
+
+        private async Task UpdateStatsAsync()
+        {
+            var statCollection = Data.DB.StatCollection();
+            var filter = Builders<Stats>.Filter.Eq(s => s.Id, Stats.Id);
+            var update = Builders<Stats>.Update
+                .Set(s => s.Hp, Stats.Hp)
+                .Set(s => s.Stamina, Stats.Stamina)
+                .Set(s => s.Strenght, Stats.Strenght)
+                .Set(s => s.Agility, Stats.Agility)
+                .Set(s => s.Vigor, Stats.Vigor);
+
+            await statCollection.UpdateOneAsync(filter, update);
         }
     }
 }

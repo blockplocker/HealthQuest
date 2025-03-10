@@ -86,48 +86,22 @@ namespace HealthQuest
                 var viewModel = BindingContext as ViewModels.MainPageViewModel;
                 var dailyQuest = viewModel.DailyQuest;
 
-                switch (missionType)
+                bool isMissionComplete = missionType switch
                 {
-                    case "Pushups":
-                        if (dailyQuest.Pushups >= 10)
-                        {
-                            viewModel.CompleteMission(missionType);
-                        }
-                        else
-                        {
-                            await DisplayAlert("Incomplete", "You have not completed the target pushups.", "OK");
-                        }
-                        break;
-                    case "SitUps":
-                        if (dailyQuest.SitUps >= 10)
-                        {
-                            viewModel.CompleteMission(missionType);
-                        }
-                        else
-                        {
-                            await DisplayAlert("Incomplete", "You have not completed the target situps.", "OK");
-                        }
-                        break;
-                    case "Squats":
-                        if (dailyQuest.Squats >= 10)
-                        {
-                            viewModel.CompleteMission(missionType);
-                        }
-                        else
-                        {
-                            await DisplayAlert("Incomplete", "You have not completed the target squats.", "OK");
-                        }
-                        break;
-                    case "Walk":
-                        if (dailyQuest.Walk >= 5000)
-                        {
-                            viewModel.CompleteMission(missionType);
-                        }
-                        else
-                        {
-                            await DisplayAlert("Incomplete", "You have not completed the target walk steps.", "OK");
-                        }
-                        break;
+                    "Pushups" => dailyQuest.Pushups >= 10,
+                    "SitUps" => dailyQuest.SitUps >= 10,
+                    "Squats" => dailyQuest.Squats >= 10,
+                    "Walk" => dailyQuest.Walk >= 5000,
+                    _ => false
+                };
+
+                if (isMissionComplete)
+                {
+                    await viewModel.CompleteMissionAsync(missionType);
+                }
+                else
+                {
+                    await DisplayAlert("Incomplete", $"You have not completed the target {missionType.ToLower()}.", "OK");
                 }
             }
         }
