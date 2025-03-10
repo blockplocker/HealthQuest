@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:HealthQuest.Models"
              x:Class="HealthQuest.MainPage"
              Title="HealthQuest">
 
@@ -69,92 +70,99 @@
                     <Label Text="Daily Mission"
                            FontSize="18"
                            FontAttributes="Bold" />
+                    <!--<Picker Title="Select Difficulty"
+                            ItemsSource="{x:Static models:Difficulty}"
+                            SelectedItem="{Binding DailyQuest.Difficulty}" />-->
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text=" Complete 10 pushups" />
-                        <Label Text="{Binding DailyQuest.Pushups, StringFormat='Pushups: {0}/10'}" />
+                        <Label Text="Complete pushups" />
+                        <Label Text="{Binding DailyQuest.Pushups}" />
+                        <Label Text="/" />
+                        <Label Text="{Binding DailyQuest.TargetReps}" />
                         <Button Text="+"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedAddMission"
-                                CommandParameter="Pushups" />
+                            BackgroundColor="LightBlue"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedAddMission"
+                            CommandParameter="Pushups" />
                         <Button Text="-"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedRemoveMission"
-                                CommandParameter="Pushups" />
+                            BackgroundColor="LightBlue"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedRemoveMission"
+                            CommandParameter="Pushups" />
                         <Button Text="Complete"
-                                BackgroundColor="LightGreen"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedCompleteMission" />
+                            BackgroundColor="LightGreen"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedCompleteMission"
+                            CommandParameter="Pushups"/>
                     </HorizontalStackLayout>
                     
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text=" Complete 10 situps" />
-                        <Label Text="{Binding DailyQuest.SitUps, StringFormat='SitUps: {0}/10'}" />
+                        <Label Text="Complete situps" />
+                        <Label Text="{Binding DailyQuest.SitUps}" />
+                        <Label Text="/" />
+                        <Label Text="{Binding DailyQuest.TargetReps}" />
                         <Button Text="+"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedAddMission"
-                                CommandParameter="SitUps" />
+                            BackgroundColor="LightBlue"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedAddMission"
+                            CommandParameter="SitUps" />
                         <Button Text="-"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedRemoveMission"
-                                CommandParameter="SitUps" />
+                            BackgroundColor="LightBlue"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedRemoveMission"
+                            CommandParameter="SitUps" />
                         <Button Text="Complete"
-                                BackgroundColor="LightGreen"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedCompleteMission" />
+                            BackgroundColor="LightGreen"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedCompleteMission"
+                            CommandParameter="SitUps"/>
                     </HorizontalStackLayout>
-                    
+
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text=" Complete 10 Squats" />
-                        <Label Text="{Binding DailyQuest.Squats, StringFormat='Squats: {0}/10'}" />
+                        <Label Text="Complete squats" />
+                        <Label Text="{Binding DailyQuest.Squats}" />
+                        <Label Text="/" />
+                        <Label Text="{Binding DailyQuest.TargetReps}" />
                         <Button Text="+"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedAddMission"
-                                CommandParameter="Squats" />
+                            BackgroundColor="LightBlue"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedAddMission"
+                            CommandParameter="Squats" />
                         <Button Text="-"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedRemoveMission"
-                                CommandParameter="Squats" />
+                            BackgroundColor="LightBlue"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedRemoveMission"
+                            CommandParameter="Squats" />
                         <Button Text="Complete"
-                                BackgroundColor="LightGreen"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedCompleteMission" />
+                            BackgroundColor="LightGreen"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedCompleteMission" 
+                            CommandParameter="Squats"/>
                     </HorizontalStackLayout>
-                    
+
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text=" Walk 5,000 steps" />
-                        <Label Text="{Binding DailyQuest.Walk, StringFormat='Walk: {0}/5000'}" />
-                        <Button Text="+"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedAddMission"
-                                CommandParameter="Walk" />
-                        <Button Text="-"
-                                BackgroundColor="LightBlue"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedRemoveMission"
-                                CommandParameter="Walk" />
+                        <Label Text="Walk steps" />
+                        <Label Text="{Binding DailyQuest.Walk}" />
+                        <Label Text="/" />
+                        <Label Text="{Binding DailyQuest.TargetWalkSteps}" />
+                        <Entry Placeholder="Enter steps"
+                            Keyboard="Numeric"
+                            Text="{Binding DailyQuest.Walk, Mode=TwoWay}"
+                            x:Name="DailyQuestWalk"   />
                         <Button Text="Complete"
-                                BackgroundColor="LightGreen"
-                                TextColor="White"
-                                CornerRadius="10"
-                                Clicked="OnClickedCompleteMission" />
+                            BackgroundColor="LightGreen"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedCompleteMission" 
+                            CommandParameter="Walk" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
@@ -167,7 +175,7 @@
                     <Label Text="Weather"
                            FontSize="18"
                            FontAttributes="Bold" />
-                    <Label Text="Loading weather..."
+                    <Label Text="Weather not impamented yet"
                            x:Name="WeatherLabel" />
                 </VerticalStackLayout>
             </Border>

@@ -46,16 +46,18 @@ namespace HealthQuest.ViewModels
             DailyQuest = new DailyQuest
             {
                 Id = Guid.NewGuid().ToString(),
+                Difficulty = Difficulty.Beginner,
                 Pushups = 0,
                 SitUps = 0,
                 Squats = 0,
-                Walk = 0
+                Walk = 0,
+                CurrentDay = DateTime.Today
             };
+            CheckAndResetDailyQuest();
         }
 
-        private async Task LoadStatsAsync()
+        private async void LoadStatsAsync()
         {
-
             var statCollection = Data.DB.StatCollection();
 
             Stats = statCollection.Find(_ => true).SingleOrDefault();
@@ -71,6 +73,50 @@ namespace HealthQuest.ViewModels
                     Vigor = 10
                 };
                 await statCollection.InsertOneAsync(Stats);
+            }
+        }
+
+        private void CheckAndResetDailyQuest()
+        {
+            if (DailyQuest.CurrentDay != DateTime.Today)
+            {
+                DailyQuest.ResetDailyQuest();
+                DailyQuest.CurrentDay = DateTime.Today;
+            }
+        }
+
+        public void CompleteMission(string missionType)
+        {
+            switch (missionType)
+            {
+                case "Pushups":
+                    if (DailyQuest.Pushups >= 10)
+                    {
+                        Stats.Strenght += DailyQuest.Pushups / 10;
+                        DailyQuest.Pushups = 0;
+                    }
+                    break;
+                case "SitUps":
+                    if (DailyQuest.SitUps >= 10)
+                    {
+                        Stats.Agility += DailyQuest.SitUps / 10;
+                        DailyQuest.SitUps = 0;
+                    }
+                    break;
+                case "Squats":
+                    if (DailyQuest.Squats >= 10)
+                    {
+                        Stats.Vigor += DailyQuest.Squats / 10;
+                        DailyQuest.Squats = 0;
+                    }
+                    break;
+                case "Walk":
+                    if (DailyQuest.Walk >= 5000)
+                    {
+                        Stats.Stamina += DailyQuest.Walk / 5000;
+                        DailyQuest.Walk = 0;
+                    }
+                    break;
             }
         }
     }

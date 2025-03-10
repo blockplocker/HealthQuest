@@ -31,7 +31,6 @@ namespace HealthQuest
 
         }
 
-
         private void OnClickedAddMission(object sender, EventArgs e)
         {
             UpdateMission(sender, 1);
@@ -48,28 +47,89 @@ namespace HealthQuest
             {
                 var missionType = button.CommandParameter as string;
                 var viewModel = BindingContext as ViewModels.MainPageViewModel;
-
+                var dailyQuest = viewModel.DailyQuest;
                 switch (missionType)
                 {
                     case "Pushups":
-                        viewModel.DailyQuest.Pushups += increment;
+                        if (dailyQuest.Pushups + increment >= 0 && dailyQuest.Pushups + increment <= dailyQuest.TargetReps)
+                        {
+                            dailyQuest.Pushups += increment;
+                        }
                         break;
                     case "SitUps":
-                        viewModel.DailyQuest.SitUps += increment;
+                        if (dailyQuest.SitUps + increment >= 0 && dailyQuest.SitUps + increment <= dailyQuest.TargetReps)
+                        {
+                            dailyQuest.SitUps += increment;
+                        }
                         break;
                     case "Squats":
-                        viewModel.DailyQuest.Squats += increment;
+                        if (dailyQuest.Squats + increment >= 0 && dailyQuest.Squats + increment <= dailyQuest.TargetReps)
+                        {
+                            dailyQuest.Squats += increment;
+                        }
                         break;
                     case "Walk":
-                        viewModel.DailyQuest.Walk += increment;
+                        if (dailyQuest.Walk + increment >= 0 && dailyQuest.Walk + increment <= dailyQuest.TargetWalkSteps)
+                        {
+                            dailyQuest.Walk += increment;
+                        }
                         break;
                 }
             }
         }
 
-        private void OnClickedCompleteMission(object sender, EventArgs e)
+        private async void OnClickedCompleteMission(object sender, EventArgs e)
         {
+            if (sender is Button button)
+            {
+                var missionType = button.CommandParameter as string;
+                var viewModel = BindingContext as ViewModels.MainPageViewModel;
+                var dailyQuest = viewModel.DailyQuest;
 
+                switch (missionType)
+                {
+                    case "Pushups":
+                        if (dailyQuest.Pushups >= 10)
+                        {
+                            viewModel.CompleteMission(missionType);
+                        }
+                        else
+                        {
+                            await DisplayAlert("Incomplete", "You have not completed the target pushups.", "OK");
+                        }
+                        break;
+                    case "SitUps":
+                        if (dailyQuest.SitUps >= 10)
+                        {
+                            viewModel.CompleteMission(missionType);
+                        }
+                        else
+                        {
+                            await DisplayAlert("Incomplete", "You have not completed the target situps.", "OK");
+                        }
+                        break;
+                    case "Squats":
+                        if (dailyQuest.Squats >= 10)
+                        {
+                            viewModel.CompleteMission(missionType);
+                        }
+                        else
+                        {
+                            await DisplayAlert("Incomplete", "You have not completed the target squats.", "OK");
+                        }
+                        break;
+                    case "Walk":
+                        if (dailyQuest.Walk >= 5000)
+                        {
+                            viewModel.CompleteMission(missionType);
+                        }
+                        else
+                        {
+                            await DisplayAlert("Incomplete", "You have not completed the target walk steps.", "OK");
+                        }
+                        break;
+                }
+            }
         }
     }
 

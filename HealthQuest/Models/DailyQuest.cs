@@ -10,7 +10,25 @@ namespace HealthQuest.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public string Id { get; set; }
+
+        private Difficulty _difficulty;
+        public Difficulty Difficulty
+        {
+            get { return _difficulty; }
+            set
+            {
+                _difficulty = value;
+                OnPropertyChanged(nameof(Difficulty));
+                OnPropertyChanged(nameof(TargetReps));
+                OnPropertyChanged(nameof(TargetWalkSteps));
+            }
+        }
+
+        public int TargetReps => (int)Difficulty;
+        public int TargetWalkSteps => (int)Difficulty * 500;
+
         private int _pushups;
         public int Pushups
         {
@@ -53,6 +71,25 @@ namespace HealthQuest.Models
                 _walk = value;
                 OnPropertyChanged(nameof(Walk));
             }
+        }
+
+        private DateTime _currentDay;
+        public DateTime CurrentDay
+        {
+            get { return _currentDay; }
+            set
+            {
+                _currentDay = value;
+                OnPropertyChanged(nameof(CurrentDay));
+            }
+        }
+
+        public void ResetDailyQuest()
+        {
+            Pushups = 0;
+            SitUps = 0;
+            Squats = 0;
+            Walk = 0;
         }
     }
 }

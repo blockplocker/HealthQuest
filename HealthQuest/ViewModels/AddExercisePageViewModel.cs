@@ -12,12 +12,12 @@ namespace HealthQuest.ViewModels
         public Models.Exercise Exercises { get; set; }
         public AddExercisePageViewModel()
         {
-            var task = Task.Run(() => GetUserAsync());
+            var task = Task.Run(() => GetExerciseAsync());
             task.Wait();
             Exercises = task.Result;
         }
         
-        public static async Task<Models.Exercise> GetUserAsync()
+        public static async Task<Models.Exercise> GetExerciseAsync()
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("https://api.api-ninjas.com/");
