@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthQuest.Views.QuestAdminPage"
+             Title="Quest Admin">
+    <VerticalStackLayout Padding="20" Spacing="20">
+
+        <!-- Page Title -->
+        <Label Text="Quest Admin"
+               FontSize="30"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="MediumPurple" />
+
+        <!-- Quest Name -->
+        <Label Text="Quest Name"
+               FontSize="20"
+               FontAttributes="Bold" />
+        <Entry Placeholder="Enter quest name"
+               x:Name="Name"
+               FontSize="18" />
+
+        <!-- Quest Description -->
+        <Label Text="Description"
+               FontSize="20"
+               FontAttributes="Bold" />
+        <Editor Placeholder="Enter quest description"
+                x:Name="Description"
+                FontSize="18"
+                AutoSize="TextChanges" />
+
+        <!-- Quest Reps -->
+        <Label Text="Reps"
+               FontSize="20"
+               FontAttributes="Bold" />
+        <Entry Placeholder="Enter number of reps"
+               x:Name="Reps"
+               FontSize="18"
+               Keyboard="Numeric" />
+        
+        <!-- Quest Reps Done -->
+        <Label Text="Reps Completed"
+               FontSize="20"
+               FontAttributes="Bold" />
+        <Entry Placeholder="Enter number of Completed reps"
+               x:Name="RepsDone"
+               FontSize="18"
+               Keyboard="Numeric" />
+
+        <!-- Quest Stat -->
+        <Label Text="Stat"
+               FontSize="20"
+               FontAttributes="Bold" />
+        <Entry Placeholder="Enter stat to improve"
+               x:Name="Stat"
+               FontSize="18" />
+
+        <!-- Action Button -->
+        <Button Text="Create/Update Quest"
+                BackgroundColor="DodgerBlue"
+                TextColor="White"
+                CornerRadius="10"
+                x:Name="SaveButton"
+                FontSize="20"
+                Clicked="OnCreateOrUpdateButtonClicked" />
+    </VerticalStackLayout>
+</ContentPage>

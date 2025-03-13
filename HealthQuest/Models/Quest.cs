@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HealthQuest.Models
 {
-    internal class Quest
+    public class Quest
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -8,53 +8,75 @@
 
             <!-- Welcome Message -->
             <Label Text="Train to improve your stats!"
-           FontSize="24"
-           FontAttributes="Bold"
-           HorizontalOptions="Center"
-           TextColor="MediumPurple" />
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="MediumPurple" />
 
             <!-- Quests -->
             <ListView ItemsSource="{Binding Quests}" 
-            ItemSelected="OnListViewItemSelected">
-                <ListView.ItemTemplate >
-                    <DataTemplate >
-                        <ViewCell >
-                            <Grid Padding="10"
-                            RowDefinitions="auto,*"
-                            ColumnDefinitions="200,*"
-                            ColumnSpacing="20">
-
-                                <Label Grid.Column="1"
-                                Text="{Binding Name}"
-                                FontSize="32"/>
-                                <Label Grid.Row="1"
-                                Grid.Column="1"
-                                Text="{Binding Reps }"
-                                FontSize="15" />
-                                <Label Grid.Row="1"
-                                Grid.Column="1"
-                                Text="{Binding stat, StringFormat='Stat to improve {0}' }"
-                                FontSize="15" />
-                            </Grid>
+                      ItemSelected="OnListViewItemSelected"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="Default">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Border Stroke="LightGray"
+                                    StrokeShape="RoundRectangle 10"
+                                    Padding="15"
+                                    Margin="5">
+                                <Grid RowDefinitions="Auto,Auto,Auto"
+                                      ColumnDefinitions="Auto,*"
+                                      ColumnSpacing="10">
+                                    <Label Grid.Row="0"
+                                           Grid.Column="0"
+                                           Text="Quest:"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center" />
+                                    <Label Grid.Row="0"
+                                           Grid.Column="1"
+                                           Text="{Binding Name}"
+                                           FontSize="18"
+                                           VerticalOptions="Center" />
+                                    <Label Grid.Row="1"
+                                           Grid.Column="0"
+                                           Text="Reps:"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center" />
+                                    <Label Grid.Row="1"
+                                           Grid.Column="1"
+                                           Text="{Binding Reps}"
+                                           FontSize="15"
+                                           VerticalOptions="Center" />
+                                    <Label Grid.Row="2"
+                                           Grid.Column="0"
+                                           Text="Stat:"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center" />
+                                    <Label Grid.Row="2"
+                                           Grid.Column="1"
+                                           Text="{Binding Stat, StringFormat='Stat to improve: {0}'}"
+                                           FontSize="15"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-
-
             <!-- Weather Display -->
-            <Frame BorderColor="LightGray"
-           CornerRadius="10"
-           Padding="15">
+            <Border Stroke="LightGray"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="15">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Weather"
-                   FontSize="18"
-                   FontAttributes="Bold" />
+                           FontSize="18"
+                           FontAttributes="Bold" />
                     <Label Text="Loading weather..."
-                   x:Name="WeatherLabel" />
+                           x:Name="WeatherLabel" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

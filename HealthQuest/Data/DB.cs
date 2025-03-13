@@ -40,18 +40,11 @@ namespace HealthQuest.Data
             await dailyQuestCollection.InsertOneAsync(dailyQuest);
         }
 
-        public static async Task UpdateDailyQuestAsync(Models.DailyQuest dailyQuest)
+        public static async Task ReplaceDailyQuestAsync(Models.DailyQuest dailyQuest)
         {
             var dailyQuestCollection = GetDailyQuestCollection();
             var filter = Builders<Models.DailyQuest>.Filter.Eq(dq => dq.Id, dailyQuest.Id);
-            var update = Builders<Models.DailyQuest>.Update
-                .Set(dq => dq.Pushups, dailyQuest.Pushups)
-                .Set(dq => dq.SitUps, dailyQuest.SitUps)
-                .Set(dq => dq.Squats, dailyQuest.Squats)
-                .Set(dq => dq.Walk, dailyQuest.Walk)
-                .Set(dq => dq.CurrentDay, dailyQuest.CurrentDay)
-                .Set(dq => dq.Difficulty, dailyQuest.Difficulty);
-            await dailyQuestCollection.UpdateOneAsync(filter, update);
+            await dailyQuestCollection.ReplaceOneAsync(filter, dailyQuest);
         }
 
         public static async Task InsertStatsAsync(Models.Stats stats)
@@ -60,17 +53,11 @@ namespace HealthQuest.Data
             await statCollection.InsertOneAsync(stats);
         }
 
-        public static async Task UpdateStatsAsync(Models.Stats stats)
+        public static async Task ReplaceStatsAsync(Models.Stats stats)
         {
             var statCollection = GetStatCollection();
             var filter = Builders<Models.Stats>.Filter.Eq(s => s.Id, stats.Id);
-            var update = Builders<Models.Stats>.Update
-                .Set(s => s.Hp, stats.Hp)
-                .Set(s => s.Stamina, stats.Stamina)
-                .Set(s => s.Strenght, stats.Strenght)
-                .Set(s => s.Agility, stats.Agility)
-                .Set(s => s.Vigor, stats.Vigor);
-            await statCollection.UpdateOneAsync(filter, update);
+            await statCollection.ReplaceOneAsync(filter, stats);
         }
     }
 }

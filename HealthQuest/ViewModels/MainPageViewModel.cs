@@ -106,7 +106,7 @@ namespace HealthQuest.ViewModels
             {
                 DailyQuest.ResetDailyQuest();
                 DailyQuest.CurrentDay = DateTime.Today;
-                _ = Data.DB.UpdateDailyQuestAsync(DailyQuest);
+                _ = Data.DB.ReplaceDailyQuestAsync(DailyQuest);
                 OnPropertyChanged(nameof(IsPushupsNotCompleted));
                 OnPropertyChanged(nameof(IsSitUpsNotCompleted));
                 OnPropertyChanged(nameof(IsSquatsNotCompleted));
@@ -133,8 +133,8 @@ namespace HealthQuest.ViewModels
                     break;
             }
             
-                await Data.DB.UpdateStatsAsync(Stats);
-                await Data.DB.UpdateDailyQuestAsync(DailyQuest);
+                await Data.DB.ReplaceStatsAsync(Stats);
+                await Data.DB.ReplaceDailyQuestAsync(DailyQuest);
                 OnPropertyChanged(nameof(IsPushupsNotCompleted));
                 OnPropertyChanged(nameof(IsSitUpsNotCompleted));
                 OnPropertyChanged(nameof(IsSquatsNotCompleted));
