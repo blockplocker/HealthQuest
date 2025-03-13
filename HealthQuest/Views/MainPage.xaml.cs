@@ -88,10 +88,10 @@ namespace HealthQuest
 
                 bool isMissionComplete = missionType switch
                 {
-                    "Pushups" => dailyQuest.Pushups >= 10,
-                    "SitUps" => dailyQuest.SitUps >= 10,
-                    "Squats" => dailyQuest.Squats >= 10,
-                    "Walk" => dailyQuest.Walk >= 5000,
+                    "Pushups" => dailyQuest.Pushups >= dailyQuest.TargetReps,
+                    "SitUps" => dailyQuest.SitUps >= dailyQuest.TargetReps,
+                    "Squats" => dailyQuest.Squats >= dailyQuest.TargetReps,
+                    "Walk" => dailyQuest.Walk >= dailyQuest.TargetWalkSteps,
                     _ => false
                 };
 

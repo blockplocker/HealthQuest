@@ -86,7 +86,8 @@
                             HeightRequest="40"
                             FontSize="30"
                             Clicked="OnClickedAddMission"
-                            CommandParameter="Pushups" />
+                            CommandParameter="Pushups"
+                            IsEnabled="{Binding IsPushupsNotCompleted}" />
                         <Button Text="-"
                             BackgroundColor="DodgerBlue"
                             TextColor="white"
@@ -95,13 +96,15 @@
                             HeightRequest="40"
                             FontSize="30" 
                             Clicked="OnClickedRemoveMission"
-                            CommandParameter="Pushups" />
+                            CommandParameter="Pushups"
+                            IsEnabled="{Binding IsPushupsNotCompleted}" />
                         <Button Text="Complete"
                             BackgroundColor="MediumSeaGreen"
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission"
-                            CommandParameter="Pushups"/>
+                            CommandParameter="Pushups"
+                            IsEnabled="{Binding IsPushupsNotCompleted}" />
                     </HorizontalStackLayout>
                     
                     <HorizontalStackLayout Spacing="10">
@@ -117,7 +120,8 @@
                             HeightRequest="40"
                             FontSize="30" 
                             Clicked="OnClickedAddMission"
-                            CommandParameter="SitUps" />
+                            CommandParameter="SitUps"
+                            IsEnabled="{Binding IsSitUpsNotCompleted}" />
                         <Button Text="-"
                             BackgroundColor="DodgerBlue"
                             TextColor="white"
@@ -126,13 +130,15 @@
                             HeightRequest="40"
                             FontSize="30" 
                             Clicked="OnClickedRemoveMission"
-                            CommandParameter="SitUps" />
+                            CommandParameter="SitUps"
+                            IsEnabled="{Binding IsSitUpsNotCompleted}" />
                         <Button Text="Complete"
                             BackgroundColor="MediumSeaGreen"
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission"
-                            CommandParameter="SitUps"/>
+                            CommandParameter="SitUps"
+                            IsEnabled="{Binding IsSitUpsNotCompleted}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
@@ -148,7 +154,8 @@
                             HeightRequest="40"
                             FontSize="30" 
                             Clicked="OnClickedAddMission"
-                            CommandParameter="Squats" />
+                            CommandParameter="Squats"
+                            IsEnabled="{Binding IsSquatsNotCompleted}" />
                         <Button Text="-"
                             BackgroundColor="DodgerBlue"
                             TextColor="white"
@@ -157,13 +164,15 @@
                             HeightRequest="40"
                             FontSize="30" 
                             Clicked="OnClickedRemoveMission"
-                            CommandParameter="Squats" />
+                            CommandParameter="Squats"
+                            IsEnabled="{Binding IsSquatsNotCompleted}" />
                         <Button Text="Complete"
                             BackgroundColor="MediumSeaGreen"
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission" 
-                            CommandParameter="Squats"/>
+                            CommandParameter="Squats"
+                            IsEnabled="{Binding IsSquatsNotCompleted}" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
@@ -174,13 +183,15 @@
                         <Entry Placeholder="Enter steps"
                             Keyboard="Numeric"
                             Text="{Binding DailyQuest.Walk, Mode=TwoWay}"
-                            x:Name="DailyQuestWalk"   />
+                            x:Name="DailyQuestWalk"
+                            IsEnabled="{Binding IsWalkNotCompleted}" />
                         <Button Text="Complete"
                             BackgroundColor="MediumSeaGreen"
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission" 
-                            CommandParameter="Walk" />
+                            CommandParameter="Walk"
+                            IsEnabled="{Binding IsWalkNotCompleted}" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>

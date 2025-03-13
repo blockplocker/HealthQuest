@@ -37,28 +37,27 @@ namespace HealthQuest.ViewModels
             {
                 _dailyQuest = value;
                 OnPropertyChanged(nameof(DailyQuest));
+                OnPropertyChanged(nameof(IsPushupsNotCompleted));
+                OnPropertyChanged(nameof(IsSitUpsNotCompleted));
+                OnPropertyChanged(nameof(IsSquatsNotCompleted));
+                OnPropertyChanged(nameof(IsWalkNotCompleted));
             }
         }
+
+        public bool IsPushupsNotCompleted => DailyQuest.Pushups < DailyQuest.TargetReps;
+        public bool IsSitUpsNotCompleted => DailyQuest.SitUps < DailyQuest.TargetReps;
+        public bool IsSquatsNotCompleted => DailyQuest.Squats < DailyQuest.TargetReps;
+        public bool IsWalkNotCompleted => DailyQuest.Walk < DailyQuest.TargetWalkSteps;
 
         public MainPageViewModel()
         {
             LoadStatsAsync();
-            DailyQuest = new DailyQuest
-            {
-                Id = Guid.NewGuid().ToString(),
-                Difficulty = Difficulty.Beginner,
-                Pushups = 0,
-                SitUps = 0,
-                Squats = 0,
-                Walk = 0,
-                CurrentDay = DateTime.Today
-            };
-            CheckAndResetDailyQuest();
+            LoadDailyQuestAsync();
         }
 
         private async void LoadStatsAsync()
         {
-            var statCollection = Data.DB.StatCollection();
+            var statCollection = Data.DB.GetStatCollection();
 
             Stats = statCollection.Find(_ => true).SingleOrDefault();
             if (Stats == null)
@@ -72,7 +71,32 @@ namespace HealthQuest.ViewModels
                     Agility = 10,
                     Vigor = 10
                 };
-                await statCollection.InsertOneAsync(Stats);
+                await Data.DB.InsertStatsAsync(Stats);
+            }
+        }
+
+        private async void LoadDailyQuestAsync()
+        {
+            var dailyQuestCollection = Data.DB.GetDailyQuestCollection();
+
+            DailyQuest = dailyQuestCollection.Find(_ => true).SingleOrDefault();
+            if (DailyQuest == null)
+            {
+                DailyQuest = new DailyQuest
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Difficulty = Difficulty.Beginner,
+                    Pushups = 0,
+                    SitUps = 0,
+                    Squats = 0,
+                    Walk = 0,
+                    CurrentDay = DateTime.Today
+                };
+                await Data.DB.InsertDailyQuestAsync(DailyQuest);
+            }
+            else
+            {
+                CheckAndResetDailyQuest();
             }
         }
 
@@ -82,66 +106,40 @@ namespace HealthQuest.ViewModels
             {
                 DailyQuest.ResetDailyQuest();
                 DailyQuest.CurrentDay = DateTime.Today;
+                _ = Data.DB.UpdateDailyQuestAsync(DailyQuest);
+                OnPropertyChanged(nameof(IsPushupsNotCompleted));
+                OnPropertyChanged(nameof(IsSitUpsNotCompleted));
+                OnPropertyChanged(nameof(IsSquatsNotCompleted));
+                OnPropertyChanged(nameof(IsWalkNotCompleted));
             }
         }
 
         public async Task CompleteMissionAsync(string missionType)
         {
-            bool statsChanged = false;
 
             switch (missionType)
             {
                 case "Pushups":
-                    if (DailyQuest.Pushups >= 10)
-                    {
                         Stats.Strenght += DailyQuest.Pushups / 10;
-                        DailyQuest.Pushups = 0;
-                        statsChanged = true;
-                    }
                     break;
                 case "SitUps":
-                    if (DailyQuest.SitUps >= 10)
-                    {
                         Stats.Agility += DailyQuest.SitUps / 10;
-                        DailyQuest.SitUps = 0;
-                        statsChanged = true;
-                    }
                     break;
                 case "Squats":
-                    if (DailyQuest.Squats >= 10)
-                    {
                         Stats.Vigor += DailyQuest.Squats / 10;
-                        DailyQuest.Squats = 0;
-                        statsChanged = true;
-                    }
                     break;
                 case "Walk":
-                    if (DailyQuest.Walk >= 5000)
-                    {
                         Stats.Stamina += DailyQuest.Walk / 5000;
-                        DailyQuest.Walk = 0;
-                        statsChanged = true;
-                    }
                     break;
             }
-            if (statsChanged)
-            {
-                await UpdateStatsAsync();
-            }
-        }
-
-        private async Task UpdateStatsAsync()
-        {
-            var statCollection = Data.DB.StatCollection();
-            var filter = Builders<Stats>.Filter.Eq(s => s.Id, Stats.Id);
-            var update = Builders<Stats>.Update
-                .Set(s => s.Hp, Stats.Hp)
-                .Set(s => s.Stamina, Stats.Stamina)
-                .Set(s => s.Strenght, Stats.Strenght)
-                .Set(s => s.Agility, Stats.Agility)
-                .Set(s => s.Vigor, Stats.Vigor);
-
-            await statCollection.UpdateOneAsync(filter, update);
+            
+                await Data.DB.UpdateStatsAsync(Stats);
+                await Data.DB.UpdateDailyQuestAsync(DailyQuest);
+                OnPropertyChanged(nameof(IsPushupsNotCompleted));
+                OnPropertyChanged(nameof(IsSitUpsNotCompleted));
+                OnPropertyChanged(nameof(IsSquatsNotCompleted));
+                OnPropertyChanged(nameof(IsWalkNotCompleted));
+            
         }
     }
 }
