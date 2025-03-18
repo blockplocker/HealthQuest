@@ -8,6 +8,7 @@ namespace HealthQuest.Models
 {
     public class Quest
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Reps { get; set; }

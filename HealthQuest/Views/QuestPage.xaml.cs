@@ -17,4 +17,9 @@ public partial class QuestPage : ContentPage
             await Navigation.PushAsync(page);
         }
     }
+
+    private async void OnClickedAddQuest(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Views.QuestAdminPage(null));
+    }
 }

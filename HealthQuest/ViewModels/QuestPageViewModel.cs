@@ -17,20 +17,26 @@ namespace HealthQuest.ViewModels
 
             Quests.Add(new Quest
             {
+                Id = Guid.NewGuid().ToString(),
                 Name = "Pushups",
                 Reps = 10,
+                RepsDone = 0,
                 Stat = "Strenght"
             });
             Quests.Add(new Quest
             {
+                Id = Guid.NewGuid().ToString(),
                 Name = "Situps",
                 Reps = 10,
+                RepsDone = 0,
                 Stat = "Agility"
             });
             Quests.Add(new Quest
             {
+                Id = Guid.NewGuid().ToString(),
                 Name = "Plank 1 min",
                 Reps = 1,
+                RepsDone = 0,
                 Stat = "Stamina"
             });
         }

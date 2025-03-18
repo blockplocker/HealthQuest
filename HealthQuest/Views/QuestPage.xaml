@@ -12,6 +12,12 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    TextColor="MediumPurple" />
+            
+            <!-- New Quest -->
+            <Button
+                Text="Add a new quest"
+                Clicked="OnClickedAddQuest" />
+
 
             <!-- Quests -->
             <ListView ItemsSource="{Binding Quests}" 

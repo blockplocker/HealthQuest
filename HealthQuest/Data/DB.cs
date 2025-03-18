@@ -18,6 +18,30 @@ namespace HealthQuest.Data
             return client;
         }
 
+        //  ------------------- Quest --------------------
+        public static IMongoCollection<Models.Quest> GetQuestCollection()
+        {
+            var client = GetClient();
+            var database = client.GetDatabase("MyQuestDb");
+            var questCollection = database.GetCollection<Models.Quest>("MyQuests");
+            return questCollection;
+        }
+
+        public static async Task InsertQuestAsync(Models.Quest quest)
+        {
+            var questCollection = GetQuestCollection();
+            await questCollection.InsertOneAsync(quest);
+        }
+
+        public static async Task ReplaceQuestAsync(Models.Quest quest)
+        {
+            var questCollection = GetQuestCollection();
+            var filter = Builders<Models.Quest>.Filter.Eq(q => q.Id, quest.Id);
+            await questCollection.ReplaceOneAsync(filter, quest);
+        }
+
+
+        //  ------------------- Stats --------------------
         public static IMongoCollection<Models.Stats> GetStatCollection()
         {
             var client = GetClient();
@@ -25,7 +49,20 @@ namespace HealthQuest.Data
             var statCollection = database.GetCollection<Models.Stats>("MyStats");
             return statCollection;
         }
+        public static async Task InsertStatsAsync(Models.Stats stats)
+        {
+            var statCollection = GetStatCollection();
+            await statCollection.InsertOneAsync(stats);
+        }
 
+        public static async Task ReplaceStatsAsync(Models.Stats stats)
+        {
+            var statCollection = GetStatCollection();
+            var filter = Builders<Models.Stats>.Filter.Eq(s => s.Id, stats.Id);
+            await statCollection.ReplaceOneAsync(filter, stats);
+        }
+
+        //  ------------------- DailyQuest --------------------
         public static IMongoCollection<Models.DailyQuest> GetDailyQuestCollection()
         {
             var client = GetClient();
@@ -47,17 +84,5 @@ namespace HealthQuest.Data
             await dailyQuestCollection.ReplaceOneAsync(filter, dailyQuest);
         }
 
-        public static async Task InsertStatsAsync(Models.Stats stats)
-        {
-            var statCollection = GetStatCollection();
-            await statCollection.InsertOneAsync(stats);
-        }
-
-        public static async Task ReplaceStatsAsync(Models.Stats stats)
-        {
-            var statCollection = GetStatCollection();
-            var filter = Builders<Models.Stats>.Filter.Eq(s => s.Id, stats.Id);
-            await statCollection.ReplaceOneAsync(filter, stats);
-        }
     }
 }

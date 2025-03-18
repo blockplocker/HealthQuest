@@ -56,12 +56,12 @@
                FontSize="18" />
 
         <!-- Action Button -->
-        <Button Text="Create/Update Quest"
+        <Button Text="Create Quest"
                 BackgroundColor="DodgerBlue"
                 TextColor="White"
                 CornerRadius="10"
                 x:Name="SaveButton"
                 FontSize="20"
-                Clicked="OnCreateOrUpdateButtonClicked" />
+                Clicked="OnClickedSaveButton" />
     </VerticalStackLayout>
 </ContentPage>
