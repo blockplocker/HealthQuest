@@ -18,7 +18,6 @@
                 Text="Add a new quest"
                 Clicked="OnClickedAddQuest" />
 
-
             <!-- Quests -->
             <ListView ItemsSource="{Binding Quests}" 
                       ItemSelected="OnListViewItemSelected"
@@ -31,58 +30,47 @@
                                     StrokeShape="RoundRectangle 10"
                                     Padding="15"
                                     Margin="5">
-                                <Grid RowDefinitions="Auto,Auto,Auto"
-                                      ColumnDefinitions="Auto,*"
-                                      ColumnSpacing="10">
-                                    <Label Grid.Row="0"
-                                           Grid.Column="0"
-                                           Text="Quest:"
-                                           FontAttributes="Bold"
-                                           VerticalOptions="Center" />
-                                    <Label Grid.Row="0"
-                                           Grid.Column="1"
-                                           Text="{Binding Name}"
+                                <VerticalStackLayout Spacing="10">
+                                    <Label Text="{Binding Name}"
                                            FontSize="18"
-                                           VerticalOptions="Center" />
-                                    <Label Grid.Row="1"
-                                           Grid.Column="0"
-                                           Text="Reps:"
                                            FontAttributes="Bold"
                                            VerticalOptions="Center" />
-                                    <Label Grid.Row="1"
-                                           Grid.Column="1"
-                                           Text="{Binding Reps}"
+                                    <Label Text="{Binding Description}"
                                            FontSize="15"
                                            VerticalOptions="Center" />
-                                    <Label Grid.Row="2"
-                                           Grid.Column="0"
-                                           Text="Stat:"
+                                    <Label Text="{Binding Stat, StringFormat='Stat: {0}'}"
+                                           FontSize="15"
+                                           VerticalOptions="Center" />
+                                    
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="Reps:"
+                                               FontAttributes="Bold"
+                                               VerticalOptions="Center" />
+                                        <Label Text="{Binding RepsDone}"
+                                               FontSize="15"
+                                               VerticalOptions="Center" />
+                                        <Label Text="/"
+                                               FontSize="15"
+                                               VerticalOptions="Center" />
+                                        <Label Text="{Binding Reps}"
+                                               FontSize="15"
+                                               VerticalOptions="Center" />
+                                        <Stepper Minimum="0"
+                                                 Maximum="{Binding Reps}"
+                                                 Increment="1"
+                                                 Value="{Binding RepsDone, Mode=TwoWay}" />
+                                    </HorizontalStackLayout>
+                                    
+                                    <Label Text="{Binding CompletionStatus}"
+                                           FontSize="15"
                                            FontAttributes="Bold"
                                            VerticalOptions="Center" />
-                                    <Label Grid.Row="2"
-                                           Grid.Column="1"
-                                           Text="{Binding Stat, StringFormat='Stat to improve: {0}'}"
-                                           FontSize="15"
-                                           VerticalOptions="Center" />
-                                </Grid>
+                                </VerticalStackLayout>
                             </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
-            <!-- Weather Display -->
-            <Border Stroke="LightGray"
-                    StrokeShape="RoundRectangle 10"
-                    Padding="15">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Weather"
-                           FontSize="18"
-                           FontAttributes="Bold" />
-                    <Label Text="Loading weather..."
-                           x:Name="WeatherLabel" />
-                </VerticalStackLayout>
-            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

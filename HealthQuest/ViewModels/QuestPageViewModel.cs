@@ -1,4 +1,5 @@
 ﻿using HealthQuest.Models;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,34 +12,21 @@ namespace HealthQuest.ViewModels
     internal class QuestPageViewModel
     {
         public ObservableCollection<Quest> Quests { get; set; }
+
         public QuestPageViewModel()
         {
             Quests = new ObservableCollection<Quest>();
+            LoadQuestsAsync();
+        }
 
-            Quests.Add(new Quest
+        private async Task LoadQuestsAsync()
+        {
+            var questCollection = Data.DB.GetQuestCollection();
+            var quests = await questCollection.Find(_ => true).ToListAsync();
+            foreach (var quest in quests)
             {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Pushups",
-                Reps = 10,
-                RepsDone = 0,
-                Stat = "Strenght"
-            });
-            Quests.Add(new Quest
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Situps",
-                Reps = 10,
-                RepsDone = 0,
-                Stat = "Agility"
-            });
-            Quests.Add(new Quest
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Plank 1 min",
-                Reps = 1,
-                RepsDone = 0,
-                Stat = "Stamina"
-            });
+                Quests.Add(quest);
+            }
         }
     }
 }

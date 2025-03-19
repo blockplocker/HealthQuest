@@ -40,6 +40,14 @@ namespace HealthQuest.Data
             await questCollection.ReplaceOneAsync(filter, quest);
         }
 
+        public static async Task UpdateRepsDoneAsync(string questId, int repsDone)
+        {
+            var questCollection = GetQuestCollection();
+            var filter = Builders<Models.Quest>.Filter.Eq(q => q.Id, questId);
+            var update = Builders<Models.Quest>.Update.Set(q => q.RepsDone, repsDone);
+            await questCollection.UpdateOneAsync(filter, update);
+        }
+
 
         //  ------------------- Stats --------------------
         public static IMongoCollection<Models.Stats> GetStatCollection()

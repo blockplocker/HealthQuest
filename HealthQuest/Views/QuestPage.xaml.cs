@@ -2,19 +2,18 @@ namespace HealthQuest.Views;
 
 public partial class QuestPage : ContentPage
 {
-	public QuestPage()
-	{
-		InitializeComponent();
+    public QuestPage()
+    {
+        InitializeComponent();
         BindingContext = new ViewModels.QuestPageViewModel();
     }
+
     private async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        var Quest = ((ListView)sender).SelectedItem as Models.Quest;
-        if (Quest != null)
+        var quest = ((ListView)sender).SelectedItem as Models.Quest;
+        if (quest != null)
         {
-            var page = new QuestDetailsPage();
-            page.BindingContext = Quest;
-            await Navigation.PushAsync(page);
+            await Navigation.PushAsync(new QuestAdminPage(quest));
         }
     }
 

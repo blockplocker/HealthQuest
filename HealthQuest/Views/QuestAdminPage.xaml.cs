@@ -16,11 +16,23 @@ public partial class QuestAdminPage : ContentPage
         {
             Name.Text = Quest.Name;
             Description.Text = Quest.Description;
-            Reps.Text = Quest.Reps.ToString();
-            RepsDone.Text = Quest.RepsDone.ToString();
-            Stat.Text = Quest.Stat.ToString();
+            RepsStepper.Value = Quest.Reps;
+            RepsLabel.Text = Quest.Reps.ToString();
+            RepsDoneStepper.Value = Quest.RepsDone;
+            RepsDoneLabel.Text = Quest.RepsDone.ToString();
+            StatPicker.SelectedItem = Quest.Stat;
             SaveButton.Text = "Update Quest";
         }
+    }
+
+    private void OnRepsStepperValueChanged(object sender, ValueChangedEventArgs e)
+    {
+        RepsLabel.Text = e.NewValue.ToString();
+    }
+
+    private void OnRepsDoneStepperValueChanged(object sender, ValueChangedEventArgs e)
+    {
+        RepsDoneLabel.Text = e.NewValue.ToString();
     }
 
     private async void OnClickedSaveButton(object sender, EventArgs e)
@@ -32,9 +44,9 @@ public partial class QuestAdminPage : ContentPage
                 Id = Guid.NewGuid().ToString(),
                 Name = Name.Text,
                 Description = Description.Text,
-                Reps = int.Parse(Reps.Text),
-                RepsDone = int.Parse(RepsDone.Text),
-                Stat = Stat.Text
+                Reps = (int)RepsStepper.Value,
+                RepsDone = (int)RepsDoneStepper.Value,
+                Stat = StatPicker.SelectedItem.ToString()
             };
             await Data.DB.InsertQuestAsync(Quest);
         }
@@ -42,14 +54,13 @@ public partial class QuestAdminPage : ContentPage
         {
             Quest.Name = Name.Text;
             Quest.Description = Description.Text;
-            Quest.Reps = int.Parse(Reps.Text);
-            Quest.RepsDone = int.Parse(RepsDone.Text);
-            Quest.Stat = Stat.Text;
+            Quest.Reps = (int)RepsStepper.Value;
+            Quest.RepsDone = (int)RepsDoneStepper.Value;
+            Quest.Stat = StatPicker.SelectedItem.ToString();
 
             await Data.DB.ReplaceQuestAsync(Quest);
         }
 
-        Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); // remove the quest details from the nav stack
         await Navigation.PopAsync();
     }
 }

@@ -12,7 +12,7 @@
                HorizontalOptions="Center"
                TextColor="MediumPurple" />
 
-        <!-- Quest Name -->
+        <!-- Name -->
         <Label Text="Quest Name"
                FontSize="20"
                FontAttributes="Bold" />
@@ -20,7 +20,7 @@
                x:Name="Name"
                FontSize="18" />
 
-        <!-- Quest Description -->
+        <!-- Description -->
         <Label Text="Description"
                FontSize="20"
                FontAttributes="Bold" />
@@ -29,31 +29,45 @@
                 FontSize="18"
                 AutoSize="TextChanges" />
 
-        <!-- Quest Reps -->
+        <!-- Reps -->
         <Label Text="Reps"
                FontSize="20"
                FontAttributes="Bold" />
-        <Entry Placeholder="Enter number of reps"
-               x:Name="Reps"
-               FontSize="18"
-               Keyboard="Numeric" />
-        
-        <!-- Quest Reps Done -->
+        <Label x:Name="RepsLabel"
+               FontSize="18" />
+        <Stepper x:Name="RepsStepper"
+                 Minimum="0"
+                 Maximum="100"
+                 Increment="1"
+                 ValueChanged="OnRepsStepperValueChanged" />
+
+        <!-- Reps Done -->
         <Label Text="Reps Completed"
                FontSize="20"
                FontAttributes="Bold" />
-        <Entry Placeholder="Enter number of Completed reps"
-               x:Name="RepsDone"
-               FontSize="18"
-               Keyboard="Numeric" />
+        <Label x:Name="RepsDoneLabel"
+               FontSize="18" />
+        <Stepper x:Name="RepsDoneStepper"
+                 Minimum="0"
+                 Maximum="100"
+                 Increment="1"
+                 ValueChanged="OnRepsDoneStepperValueChanged" />
 
-        <!-- Quest Stat -->
+        <!-- Stat -->
         <Label Text="Stat"
                FontSize="20"
                FontAttributes="Bold" />
-        <Entry Placeholder="Enter stat to improve"
-               x:Name="Stat"
-               FontSize="18" />
+        <Picker x:Name="StatPicker"
+                FontSize="18">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Stamina</x:String>
+                    <x:String>Strength</x:String>
+                    <x:String>Agility</x:String>
+                    <x:String>Vigor</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
 
         <!-- Action Button -->
         <Button Text="Create Quest"
