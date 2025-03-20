@@ -73,6 +73,28 @@
                     <!--<Picker Title="Select Difficulty"
                             ItemsSource="{x:Static models:Difficulty}"
                             SelectedItem="{Binding DailyQuest.Difficulty}" />-->
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Complete pushups" VerticalOptions="Center"/>
+                        <Label Text="{Binding DailyQuest.Pushups}" VerticalOptions="Center"/>
+                        <Label Text="/" VerticalOptions="Center"/>
+                        <Label Text="{Binding DailyQuest.TargetReps}" VerticalOptions="Center"/>
+                        <Stepper Minimum="0"
+                             Maximum="{Binding DailyQuest.TargetReps}"
+                             Increment="1"
+                             Value="{Binding DailyQuest.Pushups, Mode=TwoWay}"
+                             ValueChanged="OnStepperValueChanged"
+                             BindingContext="Pushups"
+                             IsEnabled="{Binding IsPushupsNotCompleted}" />
+                        <Button Text="Complete"
+                            BackgroundColor="MediumSeaGreen"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Clicked="OnClickedCompleteMission"
+                            CommandParameter="Pushups"
+                            IsEnabled="{Binding IsPushupsNotCompleted}" />
+                    </HorizontalStackLayout>
+
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Complete pushups" VerticalOptions="Center"/>
                         <Label Text="{Binding DailyQuest.Pushups}" VerticalOptions="Center"/>
