@@ -25,8 +25,16 @@ namespace HealthQuest.ViewModels
             var quests = await questCollection.Find(_ => true).ToListAsync();
             foreach (var quest in quests)
             {
+                if (quest.DayCompleted?.ToUniversalTime().Date != DateTime.UtcNow.Date)
+                {
+                    quest.ResetQuest();
+                    await Data.DB.ReplaceQuestAsync(quest);
+                }
                 Quests.Add(quest);
             }
         }
+
+
+
     }
 }

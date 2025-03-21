@@ -49,10 +49,21 @@ namespace HealthQuest.ViewModels
         public bool IsSquatsNotCompleted => DailyQuest.Squats < DailyQuest.TargetReps;
         public bool IsWalkNotCompleted => DailyQuest.Walk < DailyQuest.TargetWalkSteps;
 
+        private Weather _weather;
+        public Weather Weather
+        {
+            get { return _weather; }
+            set
+            {
+                _weather = value;
+                OnPropertyChanged(nameof(Weather));
+            }
+        }
         public MainPageViewModel()
         {
             LoadStatsAsync();
             LoadDailyQuestAsync();
+            LoadWeatherAsync();
         }
 
         private async void LoadStatsAsync()
@@ -97,6 +108,15 @@ namespace HealthQuest.ViewModels
             else
             {
                 CheckAndResetDailyQuest();
+            }
+        }
+        private async void LoadWeatherAsync()
+        {
+            var location = await  Services.GeoLocation.GetCurrentLocationAsync();
+            if (location != null)
+            {
+                string uri = $"v1/weather?lat={location.Latitude}&lon={location.Longitude}";
+                Weather = await WeatherService.GetWeatherAsync(uri);
             }
         }
 

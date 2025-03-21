@@ -31,29 +31,6 @@ namespace HealthQuest
 
         }
 
-        private void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
-        {
-            if (sender is Stepper stepper)
-            {
-                var missionType = stepper.BindingContext as string;
-                var viewModel = BindingContext as ViewModels.MainPageViewModel;
-                var dailyQuest = viewModel.DailyQuest;
-
-                switch (missionType)
-                {
-                    case "Pushups":
-                        dailyQuest.Pushups = (int)e.NewValue;
-                        break;
-                    case "SitUps":
-                        dailyQuest.SitUps = (int)e.NewValue;
-                        break;
-                    case "Squats":
-                        dailyQuest.Squats = (int)e.NewValue;
-                        break;
-                }
-            }
-        }
-
         private void OnClickedAddMission(object sender, EventArgs e)
         {
             UpdateMission(sender, 1);
@@ -111,20 +88,37 @@ namespace HealthQuest
 
                 bool isMissionComplete = missionType switch
                 {
-                    "Pushups" => dailyQuest.Pushups >= dailyQuest.TargetReps,
-                    "SitUps" => dailyQuest.SitUps >= dailyQuest.TargetReps,
-                    "Squats" => dailyQuest.Squats >= dailyQuest.TargetReps,
-                    "Walk" => dailyQuest.Walk >= dailyQuest.TargetWalkSteps,
+                    "Pushups" => !viewModel.IsPushupsNotCompleted,
+                    "SitUps" => !viewModel.IsSitUpsNotCompleted,
+                    "Squats" => !viewModel.IsSquatsNotCompleted,
+                    "Walk" => !viewModel.IsWalkNotCompleted,
                     _ => false
                 };
 
                 if (isMissionComplete)
                 {
-                    await viewModel.CompleteMissionAsync(missionType);
+                    await DisplayAlert("Already Completed", $"You have already completed the target {missionType.ToLower()}.", "OK");
                 }
                 else
                 {
-                    await DisplayAlert("Incomplete", $"You have not completed the target {missionType.ToLower()}.", "OK");
+                    bool isTargetReached = missionType switch
+                    {
+                        "Pushups" => dailyQuest.Pushups >= dailyQuest.TargetReps,
+                        "SitUps" => dailyQuest.SitUps >= dailyQuest.TargetReps,
+                        "Squats" => dailyQuest.Squats >= dailyQuest.TargetReps,
+                        "Walk" => dailyQuest.Walk >= dailyQuest.TargetWalkSteps,
+                        _ => false
+                    };
+
+                    if (isTargetReached)
+                    {
+                        await viewModel.CompleteMissionAsync(missionType);
+                        await DisplayAlert("Completed", $"You completed the target {missionType.ToLower()}.👍💪", "Awesome");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Incomplete", $"You have not completed the target {missionType.ToLower()}.", "OK");
+                    }
                 }
             }
         }

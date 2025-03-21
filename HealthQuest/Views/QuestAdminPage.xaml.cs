@@ -22,6 +22,7 @@ public partial class QuestAdminPage : ContentPage
             RepsDoneLabel.Text = Quest.RepsDone.ToString();
             StatPicker.SelectedItem = Quest.Stat;
             SaveButton.Text = "Update Quest";
+            DeleteButton.IsVisible = true;
         }
     }
 
@@ -62,5 +63,14 @@ public partial class QuestAdminPage : ContentPage
         }
 
         await Navigation.PopAsync();
+    }
+
+    private async void OnClickedDeleteButton(object sender, EventArgs e)
+    {
+        if (Quest != null)
+        {
+            await Data.DB.DeleteQuestAsync(Quest.Id);
+            await Navigation.PopAsync();
+        }
     }
 }

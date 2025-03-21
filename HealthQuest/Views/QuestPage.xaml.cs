@@ -21,4 +21,18 @@ public partial class QuestPage : ContentPage
     {
         await Navigation.PushAsync(new Views.QuestAdminPage(null));
     }
+
+    private async void OnStepperValueChanged(object sender, ValueChangedEventArgs e)
+    {
+        var stepper = sender as Stepper;
+        var quest = stepper?.BindingContext as Models.Quest;
+
+        if (quest != null && quest.DayCompleted == null && quest.RepsDone >= quest.Reps)
+        {
+            quest.DayCompleted = DateTime.UtcNow;
+            quest.RepsDone = (int)stepper.Value;
+            await Data.DB.ReplaceQuestAsync(quest);
+            await DisplayAlert("Completed", $"You completed the Quest good job!!!", "Awesome");
+        }
+    }
 }

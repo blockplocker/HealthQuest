@@ -74,26 +74,6 @@
                             ItemsSource="{x:Static models:Difficulty}"
                             SelectedItem="{Binding DailyQuest.Difficulty}" />-->
 
-                    <HorizontalStackLayout Spacing="10">
-                        <Label Text="Complete pushups" VerticalOptions="Center"/>
-                        <Label Text="{Binding DailyQuest.Pushups}" VerticalOptions="Center"/>
-                        <Label Text="/" VerticalOptions="Center"/>
-                        <Label Text="{Binding DailyQuest.TargetReps}" VerticalOptions="Center"/>
-                        <Stepper Minimum="0"
-                             Maximum="{Binding DailyQuest.TargetReps}"
-                             Increment="1"
-                             Value="{Binding DailyQuest.Pushups, Mode=TwoWay}"
-                             ValueChanged="OnStepperValueChanged"
-                             BindingContext="Pushups"
-                             IsEnabled="{Binding IsPushupsNotCompleted}" />
-                        <Button Text="Complete"
-                            BackgroundColor="MediumSeaGreen"
-                            TextColor="White"
-                            CornerRadius="10"
-                            Clicked="OnClickedCompleteMission"
-                            CommandParameter="Pushups"
-                            IsEnabled="{Binding IsPushupsNotCompleted}" />
-                    </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Complete pushups" VerticalOptions="Center"/>
@@ -125,8 +105,7 @@
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission"
-                            CommandParameter="Pushups"
-                            IsEnabled="{Binding IsPushupsNotCompleted}" />
+                            CommandParameter="Pushups" />
                     </HorizontalStackLayout>
                     
                     <HorizontalStackLayout Spacing="10">
@@ -159,8 +138,7 @@
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission"
-                            CommandParameter="SitUps"
-                            IsEnabled="{Binding IsSitUpsNotCompleted}" />
+                            CommandParameter="SitUps" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
@@ -193,8 +171,7 @@
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission" 
-                            CommandParameter="Squats"
-                            IsEnabled="{Binding IsSquatsNotCompleted}" />
+                            CommandParameter="Squats" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
@@ -212,8 +189,7 @@
                             TextColor="White"
                             CornerRadius="10"
                             Clicked="OnClickedCompleteMission" 
-                            CommandParameter="Walk"
-                            IsEnabled="{Binding IsWalkNotCompleted}" />
+                            CommandParameter="Walk" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
@@ -223,11 +199,11 @@
                     StrokeShape="RoundRectangle 10"
                     Padding="15">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Weather"
+                    <Label Text="Your Weather"
                            FontSize="18"
                            FontAttributes="Bold" />
-                    <Label Text="Weather not impamented yet"
-                           x:Name="WeatherLabel" />
+                    <Label Text="{Binding Weather.temp, StringFormat='{0} °C'}"
+                           FontSize="18"/>
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>

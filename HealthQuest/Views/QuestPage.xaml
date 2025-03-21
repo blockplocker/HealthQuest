@@ -58,13 +58,24 @@
                                         <Stepper Minimum="0"
                                                  Maximum="{Binding Reps}"
                                                  Increment="1"
-                                                 Value="{Binding RepsDone, Mode=TwoWay}" />
+                                                 Value="{Binding RepsDone, Mode=TwoWay}" 
+                                                 ValueChanged="OnStepperValueChanged" />
                                     </HorizontalStackLayout>
                                     
                                     <Label Text="{Binding CompletionStatus}"
                                            FontSize="15"
                                            FontAttributes="Bold"
-                                           VerticalOptions="Center" />
+                                           VerticalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding CompletionStatus}" Value="Complete">
+                                                <Setter Property="TextColor" Value="LightGreen" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding CompletionStatus}" Value="Incomplete">
+                                                <Setter Property="TextColor" Value="Red" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    
                                 </VerticalStackLayout>
                             </Border>
                         </ViewCell>

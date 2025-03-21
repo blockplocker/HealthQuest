@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HealthQuest.Views.QuestAdminPage"
              Title="Quest Admin">
-    <VerticalStackLayout Padding="20" Spacing="20">
+    <VerticalStackLayout Padding="100 ,10" Spacing="20" >
 
         <!-- Page Title -->
         <Label Text="Quest Admin"
@@ -34,14 +34,14 @@
                FontSize="20"
                FontAttributes="Bold" />
         <Label x:Name="RepsLabel"
-               FontSize="18" />
-        <Stepper x:Name="RepsStepper"
-                 Minimum="0"
-                 Maximum="100"
-                 Increment="1"
-                 ValueChanged="OnRepsStepperValueChanged" />
+                   FontSize="18" />
+            <Stepper x:Name="RepsStepper"
+                     Minimum="0"
+                     Maximum="100"
+                     Increment="1"
+                     ValueChanged="OnRepsStepperValueChanged" />
 
-        <!-- Reps Done -->
+            <!-- Reps Done -->
         <Label Text="Reps Completed"
                FontSize="20"
                FontAttributes="Bold" />
@@ -69,13 +69,23 @@
             </Picker.ItemsSource>
         </Picker>
 
-        <!-- Action Button -->
-        <Button Text="Create Quest"
-                BackgroundColor="DodgerBlue"
-                TextColor="White"
-                CornerRadius="10"
-                x:Name="SaveButton"
-                FontSize="20"
-                Clicked="OnClickedSaveButton" />
+        <!-- Action Buttons -->
+        <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+            <Button Text="Create Quest"
+                    BackgroundColor="DodgerBlue"
+                    TextColor="White"
+                    CornerRadius="10"
+                    x:Name="SaveButton"
+                    FontSize="20"
+                    Clicked="OnClickedSaveButton" />
+            <Button Text="Delete Quest"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    CornerRadius="10"
+                    x:Name="DeleteButton"
+                    FontSize="20"
+                    Clicked="OnClickedDeleteButton"
+                    IsVisible="False" />
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
