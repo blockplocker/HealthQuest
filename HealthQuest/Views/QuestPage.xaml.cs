@@ -1,11 +1,16 @@
+using HealthQuest.Services;
+
 namespace HealthQuest.Views;
 
 public partial class QuestPage : ContentPage
 {
+    private ViewModels.QuestPageViewModel _viewModel;
+
     public QuestPage()
     {
         InitializeComponent();
-        BindingContext = new ViewModels.QuestPageViewModel();
+        _viewModel = new ViewModels.QuestPageViewModel();
+        BindingContext = _viewModel;
     }
 
     private async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -32,6 +37,10 @@ public partial class QuestPage : ContentPage
             quest.DayCompleted = DateTime.UtcNow;
             quest.RepsDone = (int)stepper.Value;
             await Data.DB.ReplaceQuestAsync(quest);
+
+            // Update Stats using ViewModel
+            await _viewModel.UpdateStatsAsync(quest);
+
             await DisplayAlert("Completed", $"You completed the Quest good job!!!", "Awesome");
         }
     }

@@ -1,4 +1,5 @@
 ﻿using HealthQuest.Models;
+using HealthQuest.Services;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,29 @@ namespace HealthQuest.ViewModels
             }
         }
 
+        public async Task UpdateStatsAsync(Quest quest)
+        {
+            var stats = StatsManager.Instance.Stats;
 
+            switch (quest.Stat)
+            {
+                case "Strenght":
+                    stats.Strenght += 1;
+                    break;
+                case "Agility":
+                    stats.Agility += 1;
+                    break;
+                case "Vigor":
+                    stats.Vigor += 1;
+                    break;
+                case "Stamina":
+                    stats.Stamina += 1;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid stat type");
+            }
 
+            await StatsManager.Instance.SaveStatsAsync();
+        }
     }
 }

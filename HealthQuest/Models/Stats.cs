@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HealthQuest.Models
 {
-    class Stats : INotifyPropertyChanged
+    public class Stats : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -1,4 +1,5 @@
 ﻿using HealthQuest.Models;
+using HealthQuest.Services;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -18,16 +19,7 @@ namespace HealthQuest.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private Stats _stats;
-        public Stats Stats
-        {
-            get { return _stats; }
-            set
-            {
-                _stats = value;
-                OnPropertyChanged(nameof(Stats));
-            }
-        }
+        public Stats Stats => StatsManager.Instance.Stats;
 
         private DailyQuest _dailyQuest;
         public DailyQuest DailyQuest
@@ -97,31 +89,9 @@ namespace HealthQuest.ViewModels
 
         public MainPageViewModel()
         {
-            LoadStatsAsync();
             LoadDailyQuestAsync();
             LoadWeatherAsync();
         }
-
-        private async void LoadStatsAsync()
-        {
-            var statCollection = Data.DB.GetStatCollection();
-
-            Stats = statCollection.Find(_ => true).SingleOrDefault();
-            if (Stats == null)
-            {
-                Stats = new Stats
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Hp = 100,
-                    Stamina = 10,
-                    Strenght = 10,
-                    Agility = 10,
-                    Vigor = 10
-                };
-                await Data.DB.InsertStatsAsync(Stats);
-            }
-        }
-
         private async void LoadDailyQuestAsync()
         {
             var dailyQuestCollection = Data.DB.GetDailyQuestCollection();
@@ -190,7 +160,7 @@ namespace HealthQuest.ViewModels
                     break;
             }
 
-            await Data.DB.ReplaceStatsAsync(Stats);
+            await StatsManager.Instance.SaveStatsAsync();
             await Data.DB.ReplaceDailyQuestAsync(DailyQuest);
 
             IsPushupsNotCompleted = DailyQuest.Pushups < DailyQuest.TargetReps;

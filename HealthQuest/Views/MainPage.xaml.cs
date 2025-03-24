@@ -5,10 +5,12 @@ namespace HealthQuest
 {
     public partial class MainPage : ContentPage
     {
+        private ViewModels.MainPageViewModel _viewModel;
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new ViewModels.MainPageViewModel();
+            _viewModel = new ViewModels.MainPageViewModel();
+            BindingContext = _viewModel;
         }
 
         private async void OnClickedTrainPage(object sender, EventArgs e)
@@ -46,8 +48,7 @@ namespace HealthQuest
             if (sender is Button button)
             {
                 var missionType = button.CommandParameter as string;
-                var viewModel = BindingContext as ViewModels.MainPageViewModel;
-                var dailyQuest = viewModel.DailyQuest;
+                var dailyQuest = _viewModel.DailyQuest;
                 switch (missionType)
                 {
                     case "Pushups":
@@ -83,15 +84,14 @@ namespace HealthQuest
             if (sender is Button button)
             {
                 var missionType = button.CommandParameter as string;
-                var viewModel = BindingContext as ViewModels.MainPageViewModel;
-                var dailyQuest = viewModel.DailyQuest;
+                var dailyQuest = _viewModel.DailyQuest;
 
                 bool isMissionComplete = missionType switch
                 {
-                    "Pushups" => !viewModel.IsPushupsNotCompleted,
-                    "SitUps" => !viewModel.IsSitUpsNotCompleted,
-                    "Squats" => !viewModel.IsSquatsNotCompleted,
-                    "Walk" => !viewModel.IsWalkNotCompleted,
+                    "Pushups" => !_viewModel.IsPushupsNotCompleted,
+                    "SitUps" => !_viewModel.IsSitUpsNotCompleted,
+                    "Squats" => !_viewModel.IsSquatsNotCompleted,
+                    "Walk" => !_viewModel.IsWalkNotCompleted,
                     _ => false
                 };
 
@@ -112,8 +112,17 @@ namespace HealthQuest
 
                     if (isTargetReached)
                     {
-                        await viewModel.CompleteMissionAsync(missionType);
-                        await DisplayAlert("Completed", $"You completed the target {missionType.ToLower()}.👍💪", "Awesome");
+                        await _viewModel.CompleteMissionAsync(missionType);
+                        string stat = missionType switch
+                        {
+                            "Pushups" => "Strength",
+                            "SitUps" => "Agility",
+                            "Squats" => "Vigor",
+                            "Walk" => "Stamina",
+                            _ => string.Empty
+                        };
+
+                        await DisplayAlert("Completed", $"You completed the target {missionType.ToLower()}.👍💪 Your {stat} has increased!", "Awesome");
                     }
                     else
                     {
