@@ -70,10 +70,9 @@
                     <Label Text="Daily Quest"
                            FontSize="18"
                            FontAttributes="Bold" />
-                    <!--<Picker Title="Select Difficulty"
-                            ItemsSource="{x:Static models:Difficulty}"
-                            SelectedItem="{Binding DailyQuest.Difficulty}" />-->
 
+                    <Picker Title="Select Difficulty"
+                            x:Name="DifficultyPicker" />
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Complete pushups" VerticalOptions="Center"/>

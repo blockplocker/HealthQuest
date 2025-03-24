@@ -6,11 +6,32 @@ namespace HealthQuest
     public partial class MainPage : ContentPage
     {
         private ViewModels.MainPageViewModel _viewModel;
+
         public MainPage()
         {
             InitializeComponent();
             _viewModel = new ViewModels.MainPageViewModel();
             BindingContext = _viewModel;
+
+            // Add Difficulty Picker values
+            DifficultyPicker.Items.Add(Difficulty.Beginner.ToString());
+            DifficultyPicker.Items.Add(Difficulty.Advanced.ToString());
+            DifficultyPicker.Items.Add(Difficulty.Expert.ToString());
+
+            // Set selected index based on value 
+            DifficultyPicker.SelectedIndex = (int)_viewModel.DailyQuest.Difficulty / 10 - 1;
+
+            // Handle the SelectedIndexChanged event
+            DifficultyPicker.SelectedIndexChanged += OnDifficultySelectedIndexChanged;
+        }
+
+        private void OnDifficultySelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (DifficultyPicker.SelectedIndex != -1)
+            {
+                var selectedDifficulty = (Difficulty)Enum.Parse(typeof(Difficulty), DifficultyPicker.Items[DifficultyPicker.SelectedIndex]);
+                _viewModel.DailyQuest.Difficulty = selectedDifficulty;
+            }
         }
 
         private async void OnClickedTrainPage(object sender, EventArgs e)
@@ -18,19 +39,19 @@ namespace HealthQuest
             await Navigation.PushAsync(new QuestPage());
         }
 
-        private void OnClickedSleepPage(object sender, EventArgs e)
+        private async void OnClickedSleepPage(object sender, EventArgs e)
         {
-
+            await DisplayAlert("Not Implamented", "Not Implamented 😭", "Ok");
         }
 
-        private void OnClickedWalkPage(object sender, EventArgs e)
+        private async void OnClickedWalkPage(object sender, EventArgs e)
         {
-
+            await DisplayAlert("Not Implamented", "Not Implamented 😭", "Ok");
         }
 
-        private void OnClickedBattlePage(object sender, EventArgs e)
+        private async void OnClickedBattlePage(object sender, EventArgs e)
         {
-
+            await DisplayAlert("Not Implamented", "Not Implamented 😭", "Ok");
         }
 
         private void OnClickedAddMission(object sender, EventArgs e)
