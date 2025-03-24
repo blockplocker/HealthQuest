@@ -37,17 +37,52 @@ namespace HealthQuest.ViewModels
             {
                 _dailyQuest = value;
                 OnPropertyChanged(nameof(DailyQuest));
-                OnPropertyChanged(nameof(IsPushupsNotCompleted));
-                OnPropertyChanged(nameof(IsSitUpsNotCompleted));
-                OnPropertyChanged(nameof(IsSquatsNotCompleted));
-                OnPropertyChanged(nameof(IsWalkNotCompleted));
             }
         }
 
-        public bool IsPushupsNotCompleted => DailyQuest.Pushups < DailyQuest.TargetReps;
-        public bool IsSitUpsNotCompleted => DailyQuest.SitUps < DailyQuest.TargetReps;
-        public bool IsSquatsNotCompleted => DailyQuest.Squats < DailyQuest.TargetReps;
-        public bool IsWalkNotCompleted => DailyQuest.Walk < DailyQuest.TargetWalkSteps;
+        private bool _isPushupsNotCompleted = true;
+        public bool IsPushupsNotCompleted
+        {
+            get { return _isPushupsNotCompleted; }
+            private set
+            {
+                _isPushupsNotCompleted = value;
+                OnPropertyChanged(nameof(IsPushupsNotCompleted));
+            }
+        }
+
+        private bool _isSitUpsNotCompleted = true;
+        public bool IsSitUpsNotCompleted
+        {
+            get { return _isSitUpsNotCompleted; }
+            private set
+            {
+                _isSitUpsNotCompleted = value;
+                OnPropertyChanged(nameof(IsSitUpsNotCompleted));
+            }
+        }
+
+        private bool _isSquatsNotCompleted = true;
+        public bool IsSquatsNotCompleted
+        {
+            get { return _isSquatsNotCompleted; }
+            private set
+            {
+                _isSquatsNotCompleted = value;
+                OnPropertyChanged(nameof(IsSquatsNotCompleted));
+            }
+        }
+
+        private bool _isWalkNotCompleted = true;
+        public bool IsWalkNotCompleted
+        {
+            get { return _isWalkNotCompleted; }
+            private set
+            {
+                _isWalkNotCompleted = value;
+                OnPropertyChanged(nameof(IsWalkNotCompleted));
+            }
+        }
 
         private Weather _weather;
         public Weather Weather
@@ -59,6 +94,7 @@ namespace HealthQuest.ViewModels
                 OnPropertyChanged(nameof(Weather));
             }
         }
+
         public MainPageViewModel()
         {
             LoadStatsAsync();
@@ -110,9 +146,10 @@ namespace HealthQuest.ViewModels
                 CheckAndResetDailyQuest();
             }
         }
+
         private async void LoadWeatherAsync()
         {
-            var location = await  Services.GeoLocation.GetCurrentLocationAsync();
+            var location = await Services.GeoLocation.GetCurrentLocationAsync();
             if (location != null)
             {
                 string uri = $"v1/weather?lat={location.Latitude}&lon={location.Longitude}";
@@ -122,44 +159,44 @@ namespace HealthQuest.ViewModels
 
         private void CheckAndResetDailyQuest()
         {
-            if (DailyQuest.CurrentDay != DateTime.Today)
+            if (DailyQuest.CurrentDay.ToUniversalTime().Date != DateTime.UtcNow.Date)
             {
                 DailyQuest.ResetDailyQuest();
                 DailyQuest.CurrentDay = DateTime.Today;
                 _ = Data.DB.ReplaceDailyQuestAsync(DailyQuest);
-                OnPropertyChanged(nameof(IsPushupsNotCompleted));
-                OnPropertyChanged(nameof(IsSitUpsNotCompleted));
-                OnPropertyChanged(nameof(IsSquatsNotCompleted));
-                OnPropertyChanged(nameof(IsWalkNotCompleted));
             }
+
+            IsPushupsNotCompleted = DailyQuest.Pushups < DailyQuest.TargetReps;
+            IsSitUpsNotCompleted = DailyQuest.SitUps < DailyQuest.TargetReps;
+            IsSquatsNotCompleted = DailyQuest.Squats < DailyQuest.TargetReps;
+            IsWalkNotCompleted = DailyQuest.Walk < DailyQuest.TargetWalkSteps;
         }
 
         public async Task CompleteMissionAsync(string missionType)
         {
-
             switch (missionType)
             {
                 case "Pushups":
-                        Stats.Strenght += DailyQuest.Pushups / 10;
+                    Stats.Strenght += DailyQuest.Pushups / 10;
                     break;
                 case "SitUps":
-                        Stats.Agility += DailyQuest.SitUps / 10;
+                    Stats.Agility += DailyQuest.SitUps / 10;
                     break;
                 case "Squats":
-                        Stats.Vigor += DailyQuest.Squats / 10;
+                    Stats.Vigor += DailyQuest.Squats / 10;
                     break;
                 case "Walk":
-                        Stats.Stamina += DailyQuest.Walk / 5000;
+                    Stats.Stamina += DailyQuest.Walk / 5000;
                     break;
             }
-            
-                await Data.DB.ReplaceStatsAsync(Stats);
-                await Data.DB.ReplaceDailyQuestAsync(DailyQuest);
-                OnPropertyChanged(nameof(IsPushupsNotCompleted));
-                OnPropertyChanged(nameof(IsSitUpsNotCompleted));
-                OnPropertyChanged(nameof(IsSquatsNotCompleted));
-                OnPropertyChanged(nameof(IsWalkNotCompleted));
-            
+
+            await Data.DB.ReplaceStatsAsync(Stats);
+            await Data.DB.ReplaceDailyQuestAsync(DailyQuest);
+
+            IsPushupsNotCompleted = DailyQuest.Pushups < DailyQuest.TargetReps;
+            IsSitUpsNotCompleted = DailyQuest.SitUps < DailyQuest.TargetReps;
+            IsSquatsNotCompleted = DailyQuest.Squats < DailyQuest.TargetReps;
+            IsWalkNotCompleted = DailyQuest.Walk < DailyQuest.TargetWalkSteps;
         }
     }
 }
