@@ -38,7 +38,7 @@ public partial class QuestPage : ContentPage
             quest.RepsDone = (int)stepper.Value;
             await Data.DB.ReplaceQuestAsync(quest);
 
-            // Update Stats using ViewModel
+            
             await _viewModel.UpdateStatsAsync(quest);
 
             await DisplayAlert("Completed", $"You completed the Quest good job!!!", "Awesome");

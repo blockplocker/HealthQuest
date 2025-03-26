@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthQuest.Views.BattlePage"
+             Title="BattlePage">
+    <Grid Padding="20" RowSpacing="20" ColumnSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Enemy Stats -->
+        <Border Grid.Row="0" BackgroundColor="Red" Padding="10" StrokeShape="RoundRectangle 10">
+            <VerticalStackLayout>
+                <Label Text="Enemy" FontSize="Large" TextColor="White" HorizontalOptions="Center"/>
+                <Label Text="{Binding EnemyHP, StringFormat='HP: {0}'}" FontSize="18" TextColor="White" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <Image Grid.Row="1" Source="orc_still.gif" />
+
+        <!-- Battle Log -->
+        <Border Grid.Row="2" Stroke="LightGray"
+        StrokeShape="RoundRectangle 10"
+        Padding="20">
+            <ScrollView>
+            <VerticalStackLayout>
+                <Label Text="Battle Log:" TextColor="White" FontSize="Medium"/>
+                <ListView ItemsSource="{Binding BattleLog}" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" TextColor="White" FontSize="Small"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </ScrollView>
+        </Border>
+
+        <!-- Action Buttons -->
+        <HorizontalStackLayout Grid.Row="3" Spacing="10" HorizontalOptions="Center">
+            <Button Text="{Binding StaminaCost, StringFormat='Attack - {0} stamina'}"
+                    Command="{Binding AttackCommand}"
+                    IsEnabled="{Binding AttackCommand.CanExecute}"
+                    BackgroundColor="DarkRed"
+                    TextColor="White"
+                    FontSize="20"/>
+            <Button Text="{Binding StaminaCost, StringFormat='Power Attack - {0}x3 stamina'}"
+                    Command="{Binding PowerAttackCommand}"
+                    IsEnabled="{Binding PowerAttackCommand.CanExecute}"
+                    BackgroundColor="Purple"
+                    TextColor="White"
+                    FontSize="20"/>
+            <Button Text="Defend (Regains Stamina and Doubles Dodge)"
+                    Command="{Binding DefendCommand}"
+                    BackgroundColor="DarkGreen"
+                    TextColor="White"
+                    FontSize="20"/>
+        </HorizontalStackLayout>
+        
+        <!-- Player Stats -->
+        <Border Grid.Row="4" BackgroundColor="Blue" Padding="10" StrokeShape="RoundRectangle 10">
+            <VerticalStackLayout >
+                <Label Text="Player" FontSize="Large" TextColor="White" HorizontalOptions="Center"/>
+                <Label Text="{Binding PlayerHP, StringFormat='HP: {0}'}" FontSize="16" TextColor="White" HorizontalOptions="Center"/>
+                <Label Text="{Binding PlayerStamina, StringFormat='Stamina: {0}'}" FontSize="16" TextColor="White" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

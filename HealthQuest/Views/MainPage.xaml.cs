@@ -51,7 +51,7 @@ namespace HealthQuest
 
         private async void OnClickedBattlePage(object sender, EventArgs e)
         {
-            await DisplayAlert("Not Implamented", "Not Implamented 😭", "Ok");
+            await Navigation.PushAsync(new BattlePage());
         }
 
         private void OnClickedAddMission(object sender, EventArgs e)
