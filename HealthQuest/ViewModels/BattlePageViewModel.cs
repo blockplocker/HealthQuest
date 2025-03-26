@@ -41,12 +41,18 @@ namespace HealthQuest.ViewModels
         public int EnemyHP
         {
             get => _enemyHP;
-            set { _enemyHP = value; OnPropertyChanged(); }
+            set
+            {
+                _enemyHP = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsEnemyDefeated));
+            }
         }
 
         public int EnemyMaxHP { get; set; }
         public int EnemyStrength { get; set; }
         public int EnemyAgility { get; set; }
+        public string EnemyImg { get; set; }
 
         // Battle Log
         public ObservableCollection<string> BattleLog { get; set; } = new();
@@ -55,6 +61,7 @@ namespace HealthQuest.ViewModels
         public ICommand AttackCommand { get; }
         public ICommand PowerAttackCommand { get; }
         public ICommand DefendCommand { get; }
+        public ICommand SpawnEnemyCommand { get; }
 
         private Random _random = new();
 
@@ -67,16 +74,16 @@ namespace HealthQuest.ViewModels
             StaminaRegain = 10 + (int)(PlayerStamina * 0.2);
 
             // Initialize enemy stats
-            EnemyMaxHP = 80;
-            EnemyHP = EnemyMaxHP;
-            EnemyStrength = 12;
-            EnemyAgility = 8;
+            SpawnNewEnemy();
 
             // Commands
             AttackCommand = new Command(PlayerAttack, CanAttack);
             PowerAttackCommand = new Command(PlayerPowerAttack, CanPowerAttack);
             DefendCommand = new Command(PlayerDefend);
+            SpawnEnemyCommand = new Command(SpawnNewEnemy);
         }
+
+        public bool IsEnemyDefeated => EnemyHP <= 0;
 
         private bool CanAttack() => PlayerHP > 0 && EnemyHP > 0 && PlayerStamina >= StaminaCost;
         private bool CanPowerAttack() => PlayerHP > 0 && EnemyHP > 0 && PlayerStamina >= StaminaCost * 3;
@@ -161,6 +168,31 @@ namespace HealthQuest.ViewModels
                 dodgeChance *= 2; // Double the dodge chance if defending
             }
             return dodgeChance;
+        }
+
+        private void SpawnNewEnemy()
+        {
+            int img = _random.Next(1, 3);
+            if(img == 1)
+            {
+                EnemyImg = "orc_still.gif";
+            }
+            else if(img == 2)
+            {
+                EnemyImg = "goblin_still.gif";
+            }
+            else
+            {
+            EnemyImg = "golem_still.gif";
+            }
+            var playerStats = StatsManager.Instance.Stats;
+            EnemyMaxHP = _random.Next(playerStats.Hp / 2, playerStats.Vigor * 8);
+            EnemyHP = EnemyMaxHP;
+            EnemyStrength = _random.Next(playerStats.Strenght / 2, playerStats.Strenght);
+            EnemyAgility = _random.Next(playerStats.Agility / 2, playerStats.Agility );
+            BattleLog.Add("A new enemy has appeared!");
+
+            OnPropertyChanged(nameof(EnemyImg));
         }
 
         private async void SavePlayerStatsAsync()

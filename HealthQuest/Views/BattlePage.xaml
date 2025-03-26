@@ -20,7 +20,7 @@
             </VerticalStackLayout>
         </Border>
 
-        <Image Grid.Row="1" Source="orc_still.gif" />
+        <Image Grid.Row="1" Source="{Binding EnemyImg}" />
 
         <!-- Battle Log -->
         <Border Grid.Row="2" Stroke="LightGray"
@@ -61,6 +61,12 @@
                     BackgroundColor="DarkGreen"
                     TextColor="White"
                     FontSize="20"/>
+            <Button Text="Spawn New Enemy"
+                    Command="{Binding SpawnEnemyCommand}"
+                    BackgroundColor="DarkBlue"
+                    TextColor="White"
+                    FontSize="20"
+                    IsVisible="{Binding IsEnemyDefeated}"/>
         </HorizontalStackLayout>
         
         <!-- Player Stats -->

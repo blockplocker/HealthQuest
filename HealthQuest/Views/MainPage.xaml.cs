@@ -1,4 +1,5 @@
 ﻿using HealthQuest.Models;
+using HealthQuest.Services;
 using HealthQuest.Views;
 
 namespace HealthQuest
@@ -41,7 +42,9 @@ namespace HealthQuest
 
         private async void OnClickedSleepPage(object sender, EventArgs e)
         {
-            await DisplayAlert("Not Implamented", "Not Implamented 😭", "Ok");
+            StatsManager.Instance.Stats.Hp = StatsManager.Instance.Stats.Vigor * 10;
+            await StatsManager.Instance.SaveStatsAsync();
+            await DisplayAlert("You slept for 10 hours", "Great sleep you regained all your hp", "Ok");
         }
 
         private async void OnClickedWalkPage(object sender, EventArgs e)

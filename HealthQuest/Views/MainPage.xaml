@@ -39,27 +39,31 @@
                 <!-- Navigation Buttons -->
                 <Button Text="Train"
                         Clicked="OnClickedTrainPage"
-                        BackgroundColor="LightBlue"
+                        BackgroundColor="LightSeaGreen"
                         TextColor="White"
-                        CornerRadius="10" />
+                        CornerRadius="10" 
+                        FontAttributes="Bold"/>
 
                 <Button Text="Sleep"
                         Clicked="OnClickedSleepPage"
-                        BackgroundColor="LightGreen"
+                        BackgroundColor="DarkSeaGreen"
                         TextColor="White"
-                        CornerRadius="10" />
+                        CornerRadius="10" 
+                        FontAttributes="Bold"/>
 
                 <Button Text="Go on a Walk"
                         Clicked="OnClickedWalkPage"
                         BackgroundColor="LightCoral"
                         TextColor="White"
-                        CornerRadius="10" />
+                        CornerRadius="10" 
+                        FontAttributes="Bold"/>
 
                 <Button Text="Battle"
                         Clicked="OnClickedBattlePage"
                         BackgroundColor="LightSalmon"
                         TextColor="White"
-                        CornerRadius="10" />
+                        CornerRadius="10" 
+                        FontAttributes="Bold"/>
             </HorizontalStackLayout>
 
             <!-- Daily Mission -->
