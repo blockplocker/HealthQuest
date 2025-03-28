@@ -12,6 +12,8 @@ namespace HealthQuest.ViewModels
 {
     internal class MainPageViewModel : INotifyPropertyChanged
     {
+        private readonly IQuestFactory _questFactory;
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
@@ -89,9 +91,11 @@ namespace HealthQuest.ViewModels
 
         public MainPageViewModel()
         {
+            _questFactory = new QuestFactory();
             LoadDailyQuestAsync();
             LoadWeatherAsync();
         }
+
         private async void LoadDailyQuestAsync()
         {
             var dailyQuestCollection = Data.DB.GetDailyQuestCollection();
@@ -99,16 +103,7 @@ namespace HealthQuest.ViewModels
             DailyQuest = dailyQuestCollection.Find(_ => true).SingleOrDefault();
             if (DailyQuest == null)
             {
-                DailyQuest = new DailyQuest
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Difficulty = Difficulty.Beginner,
-                    Pushups = 0,
-                    SitUps = 0,
-                    Squats = 0,
-                    Walk = 0,
-                    CurrentDay = DateTime.Today
-                };
+                DailyQuest = _questFactory.CreateDailyQuest(Difficulty.Beginner);
                 await Data.DB.InsertDailyQuestAsync(DailyQuest);
             }
             else

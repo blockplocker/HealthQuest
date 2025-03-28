@@ -104,11 +104,17 @@
                             CommandParameter="Pushups"
                             IsEnabled="{Binding IsPushupsNotCompleted}" />
                         <Button Text="Complete"
-                            BackgroundColor="MediumSeaGreen"
-                            TextColor="White"
-                            CornerRadius="10"
-                            Clicked="OnClickedCompleteMission"
-                            CommandParameter="Pushups" />
+                                BackgroundColor="MediumSeaGreen"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnClickedCompleteMission"
+                                CommandParameter="Pushups">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsPushupsNotCompleted}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
                     </HorizontalStackLayout>
                     
                     <HorizontalStackLayout Spacing="10">
@@ -137,11 +143,17 @@
                             CommandParameter="SitUps"
                             IsEnabled="{Binding IsSitUpsNotCompleted}" />
                         <Button Text="Complete"
-                            BackgroundColor="MediumSeaGreen"
-                            TextColor="White"
-                            CornerRadius="10"
-                            Clicked="OnClickedCompleteMission"
-                            CommandParameter="SitUps" />
+                                BackgroundColor="MediumSeaGreen"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnClickedCompleteMission"
+                                CommandParameter="SitUps">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsSitUpsNotCompleted}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
@@ -170,11 +182,17 @@
                             CommandParameter="Squats"
                             IsEnabled="{Binding IsSquatsNotCompleted}" />
                         <Button Text="Complete"
-                            BackgroundColor="MediumSeaGreen"
-                            TextColor="White"
-                            CornerRadius="10"
-                            Clicked="OnClickedCompleteMission" 
-                            CommandParameter="Squats" />
+                                BackgroundColor="MediumSeaGreen"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnClickedCompleteMission"
+                                CommandParameter="Squats">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsSquatsNotCompleted}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
@@ -188,11 +206,17 @@
                             x:Name="DailyQuestWalk"
                             IsEnabled="{Binding IsWalkNotCompleted}" />
                         <Button Text="Complete"
-                            BackgroundColor="MediumSeaGreen"
-                            TextColor="White"
-                            CornerRadius="10"
-                            Clicked="OnClickedCompleteMission" 
-                            CommandParameter="Walk" />
+                                BackgroundColor="MediumSeaGreen"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnClickedCompleteMission"
+                                CommandParameter="Walk">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsWalkNotCompleted}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="Gray" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>

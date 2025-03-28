@@ -1,14 +1,18 @@
 using HealthQuest.Models;
+using HealthQuest.Services;
 using MongoDB.Driver;
 
 namespace HealthQuest.Views;
 
 public partial class QuestAdminPage : ContentPage
 {
+    private readonly IQuestFactory _questFactory;
     public Models.Quest Quest { get; set; }
+
     public QuestAdminPage(Models.Quest quest)
     {
         InitializeComponent();
+        _questFactory = new QuestFactory();
 
         Quest = quest;
 
@@ -23,6 +27,15 @@ public partial class QuestAdminPage : ContentPage
             StatPicker.SelectedItem = Quest.Stat;
             SaveButton.Text = "Update Quest";
             DeleteButton.IsVisible = true;
+        }
+        else
+        {   
+        // start values
+        RepsStepper.Value = 10;
+        RepsLabel.Text = "10";
+        RepsDoneStepper.Value = 0;
+        RepsDoneLabel.Text = "0";
+        StatPicker.SelectedItem = "Strength";
         }
     }
 
@@ -40,15 +53,13 @@ public partial class QuestAdminPage : ContentPage
     {
         if (Quest == null)
         {
-            Quest = new Models.Quest()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = Name.Text,
-                Description = Description.Text,
-                Reps = (int)RepsStepper.Value,
-                RepsDone = (int)RepsDoneStepper.Value,
-                Stat = StatPicker.SelectedItem.ToString()
-            };
+            Quest = _questFactory.CreateQuest(
+                Name.Text,
+                Description.Text,
+                (int)RepsStepper.Value,
+                (int)RepsDoneStepper.Value,
+                StatPicker.SelectedItem.ToString()
+            );
             await Data.DB.InsertQuestAsync(Quest);
         }
         else

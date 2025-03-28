@@ -21,6 +21,9 @@ namespace HealthQuest.ViewModels
                 _playerHP = value;
                 OnPropertyChanged();
                 SavePlayerStatsAsync();
+                //((Command)AttackCommand).ChangeCanExecute();
+                //((Command)PowerAttackCommand).ChangeCanExecute();
+                //((Command)DefendCommand).ChangeCanExecute();
             }
         }
         private int _playerStamina;
@@ -46,6 +49,9 @@ namespace HealthQuest.ViewModels
                 _enemyHP = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(IsEnemyDefeated));
+                //((Command)AttackCommand).ChangeCanExecute();
+                //((Command)PowerAttackCommand).ChangeCanExecute();
+                //((Command)DefendCommand).ChangeCanExecute();
             }
         }
 
@@ -79,7 +85,7 @@ namespace HealthQuest.ViewModels
             // Commands
             AttackCommand = new Command(PlayerAttack, CanAttack);
             PowerAttackCommand = new Command(PlayerPowerAttack, CanPowerAttack);
-            DefendCommand = new Command(PlayerDefend);
+            DefendCommand = new Command(PlayerDefend, CanDefend);
             SpawnEnemyCommand = new Command(SpawnNewEnemy);
         }
 
@@ -87,6 +93,7 @@ namespace HealthQuest.ViewModels
 
         private bool CanAttack() => PlayerHP > 0 && EnemyHP > 0 && PlayerStamina >= StaminaCost;
         private bool CanPowerAttack() => PlayerHP > 0 && EnemyHP > 0 && PlayerStamina >= StaminaCost * 3;
+        private bool CanDefend() => PlayerHP > 0 && EnemyHP > 0;
 
         private void PlayerAttack()
         {
@@ -173,23 +180,23 @@ namespace HealthQuest.ViewModels
         private void SpawnNewEnemy()
         {
             int img = _random.Next(1, 3);
-            if(img == 1)
+            if (img == 1)
             {
                 EnemyImg = "orc_still.gif";
             }
-            else if(img == 2)
+            else if (img == 2)
             {
                 EnemyImg = "goblin_still.gif";
             }
             else
             {
-            EnemyImg = "golem_still.gif";
+                EnemyImg = "golem_still.gif";
             }
             var playerStats = StatsManager.Instance.Stats;
             EnemyMaxHP = _random.Next(playerStats.Hp / 2, playerStats.Vigor * 8);
             EnemyHP = EnemyMaxHP;
             EnemyStrength = _random.Next(playerStats.Strenght / 2, playerStats.Strenght);
-            EnemyAgility = _random.Next(playerStats.Agility / 2, playerStats.Agility );
+            EnemyAgility = _random.Next(playerStats.Agility / 2, playerStats.Agility);
             BattleLog.Add("A new enemy has appeared!");
 
             OnPropertyChanged(nameof(EnemyImg));
