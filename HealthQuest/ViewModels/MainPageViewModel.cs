@@ -96,6 +96,16 @@ namespace HealthQuest.ViewModels
             LoadWeatherAsync();
         }
 
+        private async void LoadWeatherAsync()
+        {
+            var location = await Services.GeoLocation.GetCurrentLocationAsync();
+            if (location != null)
+            {
+                string uri = $"v1/weather?lat={location.Latitude}&lon={location.Longitude}";
+                Weather = await WeatherService.GetWeatherAsync(uri);
+            }
+        }
+
         private async void LoadDailyQuestAsync()
         {
             var dailyQuestCollection = Data.DB.GetDailyQuestCollection();
@@ -109,16 +119,6 @@ namespace HealthQuest.ViewModels
             else
             {
                 CheckAndResetDailyQuest();
-            }
-        }
-
-        private async void LoadWeatherAsync()
-        {
-            var location = await Services.GeoLocation.GetCurrentLocationAsync();
-            if (location != null)
-            {
-                string uri = $"v1/weather?lat={location.Latitude}&lon={location.Longitude}";
-                Weather = await WeatherService.GetWeatherAsync(uri);
             }
         }
 

@@ -30,7 +30,6 @@ namespace HealthQuest.Services
                 Squats = 0,
                 Walk = 0,
                 CurrentDay = DateTime.Today
-
             };
         }
     }

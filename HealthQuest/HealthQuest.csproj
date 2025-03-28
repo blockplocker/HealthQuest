@@ -81,7 +81,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\orc.gif" />
+	  <MauiImage Remove="Resources\Images\orc_attack.gif" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Remove="Views\QuestDetails.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\orc.gif" />
+	  <None Remove="Resources\Images\orc_attack.gif" />
 	</ItemGroup>
 
 	<ItemGroup>
