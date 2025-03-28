@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace HealthQuest.ViewModels
@@ -19,11 +17,8 @@ namespace HealthQuest.ViewModels
             set
             {
                 _playerHP = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(PlayerHP));
                 SavePlayerStatsAsync();
-                //((Command)AttackCommand).ChangeCanExecute();
-                //((Command)PowerAttackCommand).ChangeCanExecute();
-                //((Command)DefendCommand).ChangeCanExecute();
             }
         }
         private int _playerStamina;
@@ -33,7 +28,7 @@ namespace HealthQuest.ViewModels
             set
             {
                 _playerStamina = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(PlayerStamina));
             }
         }
         public int StaminaCost { get; set; }
@@ -47,11 +42,8 @@ namespace HealthQuest.ViewModels
             set
             {
                 _enemyHP = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(EnemyHP));
                 OnPropertyChanged(nameof(IsEnemyDefeated));
-                //((Command)AttackCommand).ChangeCanExecute();
-                //((Command)PowerAttackCommand).ChangeCanExecute();
-                //((Command)DefendCommand).ChangeCanExecute();
             }
         }
 
@@ -79,13 +71,13 @@ namespace HealthQuest.ViewModels
             StaminaCost = 10 + (int)(PlayerStamina * 0.1);
             StaminaRegain = 10 + (int)(PlayerStamina * 0.2);
 
-            // Initialize enemy stats
+            // First enemy 
             SpawnNewEnemy();
 
             // Commands
-            AttackCommand = new Command(PlayerAttack, CanAttack);
-            PowerAttackCommand = new Command(PlayerPowerAttack, CanPowerAttack);
-            DefendCommand = new Command(PlayerDefend, CanDefend);
+            AttackCommand = new Command(PlayerAttack);
+            PowerAttackCommand = new Command(PlayerPowerAttack);
+            DefendCommand = new Command(PlayerDefend);
             SpawnEnemyCommand = new Command(SpawnNewEnemy);
         }
 
@@ -97,6 +89,8 @@ namespace HealthQuest.ViewModels
 
         private void PlayerAttack()
         {
+            if (!CanAttack()) return;
+
             PlayerStamina -= StaminaCost;
 
             int damage = CalculateDamage(StatsManager.Instance.Stats.Strenght, EnemyAgility);
@@ -114,6 +108,8 @@ namespace HealthQuest.ViewModels
 
         private void PlayerPowerAttack()
         {
+            if (!CanPowerAttack()) return;
+
             PlayerStamina -= StaminaCost * 3;
 
             int damage = CalculateDamage(StatsManager.Instance.Stats.Strenght, EnemyAgility) * 2;
@@ -130,6 +126,8 @@ namespace HealthQuest.ViewModels
 
         private void PlayerDefend()
         {
+            if (!CanDefend()) return;
+
             PlayerStamina += StaminaRegain;
 
             BattleLog.Add($"You brace for impact, reducing incoming damage and regain {StaminaRegain} stamina.");
@@ -209,7 +207,7 @@ namespace HealthQuest.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged(string propertyName )
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
